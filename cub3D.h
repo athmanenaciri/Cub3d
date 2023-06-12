@@ -9,8 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
- #include<mlx.h>
-//#include "./minilibx_mms_20200219/mlx.h"
+//#include<mlx.h>
+#include "./minilibx_mms_20200219/mlx.h"
 #include <sys/fcntl.h>
 #include <unistd.h> 
 #include"get_next_line.h"
@@ -134,6 +134,8 @@ t_mlx initialize_t_mlx(t_map map);
 t_map initialize_t_map(void);
 t_textu init_text(t_map map, void *mlx);
 //-------------------------------------------
+
+void	cast_rays2(t_mlx *mlxs, int col); // -------------
 
 //-----------------angle------------------------
 double 	to_rad(double degree);

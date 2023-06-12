@@ -4,7 +4,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 DBUILD = build
 FILES = get_next_line getnext_utils parsing parsing_utils main draw about_lines \
-	cast_rays ft_split map_content events2 wall_projection ft_atoi images parsing_texture\
+	cast_rays2 ft_split map_content events2 wall_projection ft_atoi images parsing_texture\
 	init
 	
 OBJS = $(addprefix $(DBUILD)/, $(FILES:=.o))

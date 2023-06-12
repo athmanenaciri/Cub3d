@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:09:49 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/11 22:07:03 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/12 20:25:00 by anaciri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,8 @@ void	draw_mini_map(t_mlx mlxs)
 
 void	render(t_mlx mlxs)
 {
-	draw_rays(mlxs);
+	//draw_rays(mlxs);
+	draw_rays2(mlxs);
 	draw_mini_map(mlxs);
 	mlx_put_image_to_window(mlxs.mlx, mlxs.mlx_win, mlxs.img.img, 0, 0);
 }

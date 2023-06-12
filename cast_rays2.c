@@ -12,7 +12,7 @@ void	h_first_inserS(t_mlx *mlxs, t_rtrace *horizental)
 	horizental->n_x = mlxs->x_p + (addjacent / tan(mlxs->ray_ang));
 	horizental->y_step = mlxs->tile;
 	if(!horizental->is_up)
-		horizental->y_step *= mlxs->tile;
+		horizental->y_step *= -1;
 	horizental->x_step = fabs(horizental->y_step / tan(mlxs->ray_ang));
 	if(horizental->is_left)
 		horizental->x_step *= -1;
@@ -23,7 +23,7 @@ double	distance(t_mlx *mlxs, double x, double y)
 	return(sqrt(pow(x - mlxs->x_p, 2) + pow(y - mlxs->y_p, 2)));
 }
 
-double	h_interS(t_mlx *mlxs)
+t_rtrace	h_interS(t_mlx *mlxs)
 {
 	t_rtrace horizental;
 	double x;
@@ -42,12 +42,13 @@ double	h_interS(t_mlx *mlxs)
 			y -= 1;
 		if (!ft_strchr(mlxs->map.lines[(int)y][(int)x], "1 "))
 		{	
-			distance(mlxs, x *mlxs->tile, y * mlxs->tile);
+			horizental.dis = distance(mlxs, x *mlxs->tile, y * mlxs->tile);
 			break;
 		}
 		x = (x * mlxs->tile) + horizental.x_step;
 		y = (y * mlxs->tile) + horizental.y_step;
 	}
+	return(horizental);
 }
 
 void	v_first_inserS(t_mlx *mlxs, t_rtrace *vertical)
@@ -60,15 +61,15 @@ void	v_first_inserS(t_mlx *mlxs, t_rtrace *vertical)
 	addjacent = vertical->n_x - mlxs->x_p;
 	vertical->n_y = mlxs->y_p + (addjacent * tan(mlxs->ray_ang));
 	vertical->x_step = mlxs->tile;
-	if(!vertical->is_up)
-		vertical->y_step *= mlxs->tile;
-	vertical->x_step = fabs(vertical->y_step / tan(mlxs->ray_ang));
-	if(vertical->is_left)
+	if(!vertical->is_left)
 		vertical->x_step *= -1;
+	vertical->y_step = fabs(tan(mlxs->ray_ang) * vertical->y_step);
+	if(!vertical->is_up)
+		vertical->y_step *= -1;
 }
 
 
-double	v_interS(t_mlx	*mlxs)
+t_rtrace	v_interS(t_mlx	*mlxs)
 {
 	t_rtrace vertical;
 	double x;
@@ -78,6 +79,23 @@ double	v_interS(t_mlx	*mlxs)
 	dis = 0;
 
 	v_first_inserS(mlxs, &vertical);
+
+	y = vertical.n_y;
+	while(x >= 0 && x <= mlxs->width && y >= 0 && y <= mlxs->height)
+	{
+		x = x / mlxs->tile;
+		y = y / mlxs->tile;
+		if(vertical.is_up)
+			y -= 1;
+		if (!ft_strchr(mlxs->map.lines[(int)y][(int)x], "1 "))
+		{	
+			vertical.dis = distance(mlxs, x *mlxs->tile, y * mlxs->tile);
+			break;
+		}
+		x = (x * mlxs->tile) + vertical.x_step;
+		y = (y * mlxs->tile) + vertical.y_step;
+	}
+	return(vertical);
 }
 void	set_ray_ang(t_mlx *mlxs, t_rtrace *hor, t_rtrace *ver)
 {
@@ -92,14 +110,29 @@ void	set_ray_ang(t_mlx *mlxs, t_rtrace *hor, t_rtrace *ver)
 		ver->is_left = 0;
 	}
 }
-void	cast_rays2(t_mlx *mlxs, int x)
+void	cast_rays2(t_mlx *mlxs, int col)
 {
 	t_rtrace hor;
 	t_rtrace ver;
 
-	set_ray_ang(mlxs, &hor, &ver)
+	set_ray_ang(mlxs, &hor, &ver);
 	hor = h_interS(mlxs);
 	ver = v_interS(mlxs);
+
+	if (ver.dis < hor.dis)
+	{
+		mlxs->v = 1;
+		mlxs->x_hit = ver.n_x;
+		mlxs->y_hit = ver.n_y;
+		wall_projection(*mlxs, ver.dis, col);
+	}
+	else
+	{
+		mlxs->v = 0;
+		mlxs->x_hit = hor.n_x;
+		mlxs->y_hit = hor.n_y;
+		wall_projection(*mlxs, hor.dis, col);
+	}
 	
 		// hor ->
 	//       x and y first inter
