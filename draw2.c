@@ -50,17 +50,15 @@ double	norm_ang(double ang)
 	return(ang);
 }
 
-void	draw_rays(t_mlx *mlxs)
+void	draw_rays2(t_mlx *mlxs)
 {
 	int i;
 	double inc = to_rad(FOV) / mlxs->width;
-
 
 	i = 0;
 	mlxs->ray_ang = mlxs->p_ang - (to_rad(FOV) / 2);
 	while(i < mlxs->width)
 	{
-		mlxs->ray_ang = norm_ang(mlxs->ray_ang);
 		mlxs->ray_ang = norm_ang(mlxs->ray_ang);
 		cast_rays2(mlxs, i);
 		i++;

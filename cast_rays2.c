@@ -32,22 +32,23 @@ t_rtrace	h_interS(t_mlx *mlxs)
 
 	dis = 0;
 	h_first_inserS(mlxs, &horizental);
-
 	y = horizental.n_y;
-	while(x >= 0 && x <= mlxs->width && y >= 0 && y <= mlxs->height)
+	x = horizental.n_x;
+
+	if(horizental.is_up)
+		y -= mlxs->tile;
+	while(x >= 0 && x < mlxs->width && y >= 0 && y < mlxs->height)
 	{
 		x = x / mlxs->tile;
 		y = y / mlxs->tile;
-		if(horizental.is_up)
-			y -= 1;
 		if (!ft_strchr(mlxs->map.lines[(int)y][(int)x], "1 "))
-		{	
-			horizental.dis = distance(mlxs, x *mlxs->tile, y * mlxs->tile);
 			break;
-		}
+		horizental.n_x = x * mlxs->tile;
+		horizental.n_y = y * mlxs->tile;
 		x = (x * mlxs->tile) + horizental.x_step;
 		y = (y * mlxs->tile) + horizental.y_step;
 	}
+	horizental.dis = distance(mlxs, x *mlxs->tile, y * mlxs->tile);
 	return(horizental);
 }
 
@@ -81,20 +82,21 @@ t_rtrace	v_interS(t_mlx	*mlxs)
 	v_first_inserS(mlxs, &vertical);
 
 	y = vertical.n_y;
-	while(x >= 0 && x <= mlxs->width && y >= 0 && y <= mlxs->height)
+	x = vertical.n_x;
+	if(vertical.is_left)
+		x -= mlxs->tile;
+	while(x >= 0 && x < mlxs->width && y >= 0 && y < mlxs->height)
 	{
 		x = x / mlxs->tile;
 		y = y / mlxs->tile;
-		if(vertical.is_up)
-			y -= 1;
 		if (!ft_strchr(mlxs->map.lines[(int)y][(int)x], "1 "))
-		{	
-			vertical.dis = distance(mlxs, x *mlxs->tile, y * mlxs->tile);
 			break;
-		}
+		vertical.n_x = x * mlxs->tile;
+		vertical.n_y = y * mlxs->tile;
 		x = (x * mlxs->tile) + vertical.x_step;
 		y = (y * mlxs->tile) + vertical.y_step;
 	}
+	vertical.dis = distance(mlxs, x *mlxs->tile, y * mlxs->tile);
 	return(vertical);
 }
 void	set_ray_ang(t_mlx *mlxs, t_rtrace *hor, t_rtrace *ver)
@@ -116,6 +118,7 @@ void	cast_rays2(t_mlx *mlxs, int col)
 	t_rtrace ver;
 
 	set_ray_ang(mlxs, &hor, &ver);
+
 	hor = h_interS(mlxs);
 	ver = v_interS(mlxs);
 

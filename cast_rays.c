@@ -2,7 +2,6 @@
 #include <math.h>
 #include <stdio.h>
 
-
 void	find_horz_itc(t_mlx *mlxs, t_rtrace *ray_trace)
 {
 	double	tan_ang;
