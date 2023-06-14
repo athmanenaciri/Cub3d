@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:09:49 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/14 21:51:02 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/14 22:02:29 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,39 +43,39 @@ double to_rad(double degree)
 	return (degree * M_PI / 180);
 }
 
-void	draw_rays(t_mlx mlxs)
-{
-	int		col;
-	double	incr;
-	int		is_up;
-	int		is_left;
-	
-	col = 0;
-	incr = to_rad(FOV)	/ mlxs.width;
-	mlxs.ray_ang = mlxs.p_ang - (to_rad(FOV) / 2); 
-	// mlxs.ray_ang -= to_rad(180);
-	// double faux = mlxs.ray_ang - mlxs.p_ang;
-	while (col < mlxs.width)
-	{
-		is_left = 0;
-		is_up = 0;
-		mlxs.ray_ang = normalize_ang(mlxs.ray_ang);
-		// faux = normalize_ang(faux);
-		// printf("f_ang : %f cos : %f sin : %f tan : %f\n",mlxs.ray_ang * 180 / M_PI, cos(mlxs.ray_ang), sin(mlxs.ray_ang), tan(mlxs.ray_ang));
-		// printf("v_ang : %f cos : %f sin : %f tan : %f\n",(faux) * 180 / M_PI, cos(faux), sin(faux), tan(faux));
-		// faux += incr;
-		// printf("ray_ang : %f\n",mlxs.ray_ang * 180 / M_PI);
-		if (mlxs.ray_ang > 0 && mlxs.ray_ang <= M_PI)
-			is_up = 1;
-		if (mlxs.ray_ang >= M_PI / 2 && mlxs.ray_ang <= (3 *M_PI) / 2)
-			is_left = 1;
-		// printf("ray_ang : %f p_ang : %f \n",mlxs.ray_ang * 180 / M_PI, mlxs.p_ang * 180 / M_PI);
-		cast_rays(&mlxs, col, is_up, is_left);
-		col++;
-		mlxs.ray_ang += incr;
-	}
-}
-
+ // void	draw_rays(t_mlx mlxs)
+ // {
+ // 	int		col;
+ // 	double	incr;
+ // 	int		is_up;
+ // 	int		is_left;
+ // 	
+ // 	col = 0;
+ // 	incr = to_rad(FOV)	/ mlxs.width;
+ // 	mlxs.ray_ang = mlxs.p_ang - (to_rad(FOV) / 2); 
+ // 	// mlxs.ray_ang -= to_rad(180);
+ // 	// double faux = mlxs.ray_ang - mlxs.p_ang;
+ // 	while (col < mlxs.width)
+ // 	{
+ // 		is_left = 0;
+ // 		is_up = 0;
+ // 		mlxs.ray_ang = normalize_ang(mlxs.ray_ang);
+ // 		// faux = normalize_ang(faux);
+ // 		// printf("f_ang : %f cos : %f sin : %f tan : %f\n",mlxs.ray_ang * 180 / M_PI, cos(mlxs.ray_ang), sin(mlxs.ray_ang), tan(mlxs.ray_ang));
+ // 		// printf("v_ang : %f cos : %f sin : %f tan : %f\n",(faux) * 180 / M_PI, cos(faux), sin(faux), tan(faux));
+ // 		// faux += incr;
+ // 		// printf("ray_ang : %f\n",mlxs.ray_ang * 180 / M_PI);
+ // 		if (mlxs.ray_ang > 0 && mlxs.ray_ang <= M_PI)
+ // 			is_up = 1;
+ // 		if (mlxs.ray_ang >= M_PI / 2 && mlxs.ray_ang <= (3 *M_PI) / 2)
+ // 			is_left = 1;
+ // 		// printf("ray_ang : %f p_ang : %f \n",mlxs.ray_ang * 180 / M_PI, mlxs.p_ang * 180 / M_PI);
+ // 		cast_rays(&mlxs, col, is_up, is_left);
+ // 		col++;
+ // 		mlxs.ray_ang += incr;
+ // 	}
+ // }
+ //
 void	draw_cercle(t_mlx mlxs, double x, double y, int r) // NOTE : VALID
 {
 	double xx = 0;
@@ -214,7 +214,8 @@ void	draw_mini_map(t_mlx mlxs)
 
 void	render(t_mlx mlxs)
 {
-	draw_rays(mlxs);
+	//draw_rays(mlxs);
+	draw_rays2(&mlxs);
 	draw_mini_map(mlxs);
 	mlx_put_image_to_window(mlxs.mlx, mlxs.mlx_win, mlxs.img.img, 0, 0);
 }

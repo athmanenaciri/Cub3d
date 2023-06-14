@@ -1,45 +1,45 @@
 #include "cub3D.h"
 
-double	set_ang(char c)
-{
-	if (c == 'N')
-		return (3 * M_PI / 2);
-	else if (c == 'S')
-		return (M_PI / 2);
-	else if (c == 'W')
-		return (M_PI);
-	else if (c == 'E')
-		return (0);
-	return (0);
-}
-
-void	find_player(t_mlx *mlxs)
-{
-	int		x;
-	int		y;
-
-	y = 0;
-	while (y < mlxs->map.map_height)
-	{
-		x = 0;
-		while (x < mlxs->map.map_width)
-		{
-			if (ft_strchr(mlxs->map.lines[y][x], "NSEW"))
-			{
-				mlxs->x_p = x * mlxs->tile;
-				mlxs->y_p = y * mlxs->tile;
-				mlxs->p_ang = set_ang(mlxs->map.lines[y][x]);
-				mlxs->map.lines[y][x] = '0';
-				break ;
-			}
-			x++;
-		}
-		y++;
-	}
-	mlxs->x_p += (double)mlxs->tile / 2; 
-	mlxs->y_p += (double)mlxs->tile / 2; 
-}
-
+// double	set_ang(char c)
+// {
+// 	if (c == 'N')
+// 		return (3 * M_PI / 2);
+// 	else if (c == 'S')
+// 		return (M_PI / 2);
+// 	else if (c == 'W')
+// 		return (M_PI);
+// 	else if (c == 'E')
+// 		return (0);
+// 	return (0);
+// }
+//
+// void	find_player(t_mlx *mlxs)
+// {
+// 	int		x;
+// 	int		y;
+//
+// 	y = 0;
+// 	while (y < mlxs->map.map_height)
+// 	{
+// 		x = 0;
+// 		while (x < mlxs->map.map_width)
+// 		{
+// 			if (ft_strchr(mlxs->map.lines[y][x], "NSEW"))
+// 			{
+// 				mlxs->x_p = x * mlxs->tile;
+// 				mlxs->y_p = y * mlxs->tile;
+// 				mlxs->p_ang = set_ang(mlxs->map.lines[y][x]);
+// 				mlxs->map.lines[y][x] = '0';
+// 				break ;
+// 			}
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// 	mlxs->x_p += (double)mlxs->tile / 2; 
+// 	mlxs->y_p += (double)mlxs->tile / 2; 
+// }
+//
 t_mlx initialize_t_mlx(t_map map)
 {
     t_mlx	mlx;
