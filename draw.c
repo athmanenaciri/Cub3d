@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:09:49 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/11 22:07:03 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/14 21:51:02 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,38 +126,89 @@ void	draw_cub(t_mlx mlxs, int x, int y, int color)
 	}
 }
 
+// void	draw_mini_map(t_mlx mlxs)
+// {
+// 	int	x = 0;
+// 	int	y = 0;
+// 	int	xi = (mlxs.x_p/ mlxs.tile) - 5;
+// 	int	yi = (mlxs.y_p / mlxs.tile) - 2;
+// 	int	xf = (mlxs.x_p / mlxs.tile) + 5;
+// 	int	yf = (mlxs.y_p / mlxs.tile) + 2;
+//
+// 	int	tmp_y = yi;
+// 	while (xi < xf)
+// 	{
+// 		yi = tmp_y;
+// 		y = 0;
+// 		while (yi < yf)
+// 		{
+// 			if (xi < 0 || yi < 0 || xi >= mlxs.map.map_width || yi >= mlxs.map.map_height) 
+// 				draw_cub(mlxs, x, y, 0x888080);
+// 			else if (mlxs.map.lines[yi][xi] == '1')
+// 				draw_cub(mlxs, x, y, 0x888080);
+// 			else if (mlxs.map.lines[yi][xi] == '0')
+// 				draw_cub(mlxs, x, y, 0xffffff);
+// 			y += mlxs.mini_tile;
+// 			yi++;
+// 		}
+// 		x += mlxs.mini_tile;
+// 		xi++;
+// 	}
+// 	double xp =  (double)x / 2;//xf * mlxs.mini_tile; //(mlxs.x_p / mlxs.tile) + (10 * mlxs.mini_tile); 
+// 	double yp =  (double)y / 2;//yf * mlxs.mini_tile; //(mlxs.x_p / mlxs.tile) + (10 * mlxs.mini_tile);
+// 	// printf("xp : %f yp = %f\n",xp , yp);
+// 	draw_cercle(mlxs, xp, yp, 2);
+//
+// }
+
+int	check_cercle(t_mlx mlxs, int center, double x, double y)
+{
+	double	dis;
+	double	r;
+
+	r = 2 * mlxs.tile;
+	dis = sqrt(pow(center - x, 2) + pow(center - y, 2));
+	if (dis < r)
+		return (1);
+	return (0);
+}
+
 void	draw_mini_map(t_mlx mlxs)
 {
-	int	x = 0;
-	int	y = 0;
-	int	xi = (mlxs.x_p/ mlxs.tile) - 5;
-	int	yi = (mlxs.y_p / mlxs.tile) - 2;
-	int	xf = (mlxs.x_p / mlxs.tile) + 5;
-	int	yf = (mlxs.y_p / mlxs.tile) + 2;
+	double	xi;
+	double	yi;
+	double	tmp_y;
+	int		x;
+	int		y;
+	int		center = 2 * mlxs.tile;
 
-	int	tmp_y = yi;
-	while (xi < xf)
+	xi = mlxs.x_p - (2 * mlxs.tile);
+	yi = mlxs.y_p - (2 * mlxs.tile);
+	tmp_y = yi;
+	x = 0;
+
+	while (xi < mlxs.x_p + (2 * mlxs.tile))
 	{
-		yi = tmp_y;
 		y = 0;
-		while (yi < yf)
+		yi = tmp_y;
+		while (yi < mlxs.y_p + (2 * mlxs.tile))
 		{
-			if (xi < 0 || yi < 0 || xi >= mlxs.map.map_width || yi >= mlxs.map.map_height) 
-				draw_cub(mlxs, x, y, 0x888080);
-			else if (mlxs.map.lines[yi][xi] == '1')
-				draw_cub(mlxs, x, y, 0x888080);
-			else if (mlxs.map.lines[yi][xi] == '0')
-				draw_cub(mlxs, x, y, 0xffffff);
-			y += mlxs.mini_tile;
+			if (check_cercle(mlxs, center, x, y))
+			{
+				if (xi < 0 || (xi / mlxs.tile >= mlxs.map.map_width) || yi < 0 || (yi / mlxs.tile) >= mlxs.map.map_height)
+					my_mlx_pixel_put(&mlxs.img, x, y, 0x888080);
+				else if (mlxs.map.lines[(int)(yi / mlxs.tile)][(int)(xi / mlxs.tile)] == '1')
+					my_mlx_pixel_put(&mlxs.img, x, y, 0x888080);
+				else
+					my_mlx_pixel_put(&mlxs.img, x, y, 0xffffff);
+			}
 			yi++;
+			y++;
 		}
-		x += mlxs.mini_tile;
+		x++;
 		xi++;
 	}
-	double xp =  (double)x / 2;//xf * mlxs.mini_tile; //(mlxs.x_p / mlxs.tile) + (10 * mlxs.mini_tile); 
-	double yp =  (double)y / 2;//yf * mlxs.mini_tile; //(mlxs.x_p / mlxs.tile) + (10 * mlxs.mini_tile);
-	// printf("xp : %f yp = %f\n",xp , yp);
-	draw_cercle(mlxs, xp, yp, 2);
+	draw_cercle(mlxs, 2 * mlxs.tile, 2 * mlxs.tile, 3);
 
 }
 

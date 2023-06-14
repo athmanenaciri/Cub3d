@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cast_rays.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/12 23:30:16 by okrich            #+#    #+#             */
+/*   Updated: 2023/06/13 19:36:46 by okrich           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 #include <math.h>
 #include <stdio.h>
-
 
 void	find_horz_itc(t_mlx *mlxs, t_rtrace *ray_trace)
 {
@@ -14,9 +25,6 @@ void	find_horz_itc(t_mlx *mlxs, t_rtrace *ray_trace)
 		ray_trace->n_y += mlxs->tile;	
 
 	ray_trace->n_x = mlxs->x_p + (ray_trace->n_y - mlxs->y_p) / tan_ang;
-	// if (ray_trace->n_x < 0) 
-	// 	printf("n_x : %f\n",ray_trace->n_x);
-
 	ray_trace->y_step = mlxs->tile;
 	if (!ray_trace->is_up)
 		ray_trace->y_step *= -1;
@@ -35,10 +43,6 @@ void	find_ver_itc(t_mlx *mlxs, t_rtrace *ray_trace)
 		ray_trace->n_x += mlxs->tile;	
 
 	ray_trace->n_y = mlxs->y_p + (ray_trace->n_x - mlxs->x_p) * tan_ang;
-	// if (ray_trace->n_y < 0)
-	// {
-	// 	printf("y_p : %f opp : %f\n", mlxs->y_p, (ray_trace->n_x - mlxs->x_p) * tan_ang);
-	// }
 
 	ray_trace->x_step = mlxs->tile;
 	if (ray_trace->is_left)

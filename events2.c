@@ -20,34 +20,28 @@ int	ft_exit(t_mlx *mlxs)
 void	handel_key(double *x, double *y, t_mlx *mlxs)
 {
 	if (mlxs->keys.r_left)
-	{
 		mlxs->p_ang -= to_rad(5);
-		// printf("p_ang : %f\n",mlxs->p_ang * 180 / M_PI);
-	}
 	if (mlxs->keys.r_right)
-	{
 		mlxs->p_ang += to_rad(5);
-		// printf("p_ang : %f\n",mlxs->p_ang * 180 / M_PI);
-	}
 	if (mlxs->keys.w)
 	{
-		*x = mlxs->x_p + cos(mlxs->p_ang) * 20;
-		*y = mlxs->y_p + sin(mlxs->p_ang) * 20;
+		*x = mlxs->x_p + cos(mlxs->p_ang) * 15;
+		*y = mlxs->y_p + sin(mlxs->p_ang) * 15;
 	}
 	if (mlxs->keys.s)
 	{
-		*x = mlxs->x_p + cos(mlxs->p_ang) * -20;
-		*y = mlxs->y_p + sin(mlxs->p_ang) * -20;
+		*x = mlxs->x_p + cos(mlxs->p_ang) * -15;
+		*y = mlxs->y_p + sin(mlxs->p_ang) * -15;
 	}
 	if (mlxs->keys.a)
 	{
-		*x = mlxs->x_p + cos(mlxs->p_ang - to_rad(90)) * 20;
-		*y = mlxs->y_p + sin(mlxs->p_ang - to_rad(90)) * 20;
+		*x = mlxs->x_p + cos(mlxs->p_ang - to_rad(90)) * 15;
+		*y = mlxs->y_p + sin(mlxs->p_ang - to_rad(90)) * 15;
 	}
 	if (mlxs->keys.d)
 	{
-		*x = mlxs->x_p + cos(mlxs->p_ang + to_rad(90)) * 20;
-		*y = mlxs->y_p + sin(mlxs->p_ang + to_rad(90)) * 20;
+		*x = mlxs->x_p + cos(mlxs->p_ang + to_rad(90)) * 15;
+		*y = mlxs->y_p + sin(mlxs->p_ang + to_rad(90)) * 15;
 	}
 }
 

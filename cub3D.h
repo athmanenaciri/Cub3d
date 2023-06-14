@@ -9,8 +9,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
- #include<mlx.h>
-//#include "./minilibx_mms_20200219/mlx.h"
+
+#include "mlx.h"
+
 #include <sys/fcntl.h>
 #include <unistd.h> 
 #include"get_next_line.h"
