@@ -1,9 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cast_rays2.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/13 01:14:32 by anaciri           #+#    #+#             */
+/*   Updated: 2023/06/16 19:10:12 by anaciri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include"cub3D.h"
 #include <math.h>
 
+
+void	set_ray_ang(t_mlx *mlxs, t_rtrace *inter)
+{
+	inter->is_up = 0;
+	inter->is_left = 0;
+	if(mlxs->ray_ang >= 0 && mlxs->ray_ang <= (M_PI))
+		inter->is_up = 1;
+	if (mlxs->ray_ang >= (M_PI / 2) && mlxs->ray_ang <= ((3 * M_PI) / 2))
+		inter->is_left = 1;
+}
+
+double	distance(t_mlx *mlxs, double x, double y)
+{
+	return(sqrt(pow(x - mlxs->x_p, 2) + pow(y - mlxs->y_p, 2)));
+}
+
+
 void	h_first_inserS(t_mlx *mlxs, t_rtrace *horizental)
 {
-	int addjacent;
+	double addjacent;
 
 	horizental->n_y = floor(mlxs->y_p / mlxs->tile) * mlxs->tile;
 	if(horizental->is_up)
@@ -18,51 +46,46 @@ void	h_first_inserS(t_mlx *mlxs, t_rtrace *horizental)
 		horizental->x_step *= -1;
 }
 
-double	distance(t_mlx *mlxs, double x, double y)
-{
-	return(sqrt(pow(x - mlxs->x_p, 2) + pow(y - mlxs->y_p, 2)));
-}
-
 t_rtrace	h_interS(t_mlx *mlxs)
 {
 	t_rtrace horizental;
+	int		moins;
 	double x;
 	double y;
-	double dis;
-
-	dis = 0;
+	set_ray_ang(mlxs, &horizental);
 	h_first_inserS(mlxs, &horizental);
 	y = horizental.n_y;
 	x = horizental.n_x;
 
-	if(horizental.is_up)
-		y -= mlxs->tile;
-	while(x >= 0 && x < mlxs->width && y >= 0 && y < mlxs->height)
+	moins = 0;
+	if(!horizental.is_up)
+		moins = 1;
+	while(x >= 0 && x / mlxs->tile < mlxs->map.map_width && y >= 0 && y / mlxs->tile < mlxs->map.map_height)
 	{
-		x = x / mlxs->tile;
-		y = y / mlxs->tile;
-		if (!ft_strchr(mlxs->map.lines[(int)y][(int)x], "1 "))
+		if (ft_strchr(mlxs->map.lines[((int)y / mlxs->tile) - moins][(int)x / mlxs->tile], "1 "))
+		{
+			horizental.n_x = x;
+			horizental.n_y = y;
 			break;
-		horizental.n_x = x * mlxs->tile;
-		horizental.n_y = y * mlxs->tile;
-		x = (x * mlxs->tile) + horizental.x_step;
-		y = (y * mlxs->tile) + horizental.y_step;
+		}
+		x += horizental.x_step;
+		y += horizental.y_step;
 	}
-	horizental.dis = distance(mlxs, x *mlxs->tile, y * mlxs->tile);
+	horizental.dis = distance(mlxs, x, y);
 	return(horizental);
 }
 
 void	v_first_inserS(t_mlx *mlxs, t_rtrace *vertical)
 {
-	int addjacent;
+	double opposite;
 
 	vertical->n_x = floor(mlxs->x_p / mlxs->tile) * mlxs->tile;
-	if(vertical->is_left)
-		vertical->n_x += mlxs->tile;
-	addjacent = vertical->n_x - mlxs->x_p;
-	vertical->n_y = mlxs->y_p + (addjacent * tan(mlxs->ray_ang));
-	vertical->x_step = mlxs->tile;
 	if(!vertical->is_left)
+		vertical->n_x += mlxs->tile;
+	opposite = vertical->n_x - mlxs->x_p;
+	vertical->n_y = mlxs->y_p + (opposite * tan(mlxs->ray_ang));
+	vertical->x_step = mlxs->tile;
+	if(vertical->is_left)
 		vertical->x_step *= -1;
 	vertical->y_step = fabs(tan(mlxs->ray_ang) * vertical->y_step);
 	if(!vertical->is_up)
@@ -75,49 +98,35 @@ t_rtrace	v_interS(t_mlx	*mlxs)
 	t_rtrace vertical;
 	double x;
 	double y;
-	double dis;
+	int		moins;
 
-	dis = 0;
 
+	set_ray_ang(mlxs, &vertical);
 	v_first_inserS(mlxs, &vertical);
 
 	y = vertical.n_y;
 	x = vertical.n_x;
+	moins = 0;
 	if(vertical.is_left)
-		x -= mlxs->tile;
-	while(x >= 0 && x < mlxs->width && y >= 0 && y < mlxs->height)
+		moins = 1;
+	while(x >= 0 && x / mlxs->tile < mlxs->map.map_width && y >= 0 && y / mlxs->tile < mlxs->map.map_height)
 	{
-		x = x / mlxs->tile;
-		y = y / mlxs->tile;
-		if (!ft_strchr(mlxs->map.lines[(int)y][(int)x], "1 "))
+		if (ft_strchr(mlxs->map.lines[(int)y / mlxs->tile][((int)x / mlxs->tile) - moins], "1 "))
+		{
+			vertical.n_x = x;
+			vertical.n_y = y;
 			break;
-		vertical.n_x = x * mlxs->tile;
-		vertical.n_y = y * mlxs->tile;
-		x = (x * mlxs->tile) + vertical.x_step;
-		y = (y * mlxs->tile) + vertical.y_step;
+		}
+		x += vertical.x_step;
+		y += vertical.y_step;
 	}
-	vertical.dis = distance(mlxs, x *mlxs->tile, y * mlxs->tile);
+	vertical.dis = distance(mlxs, x, y);
 	return(vertical);
-}
-void	set_ray_ang(t_mlx *mlxs, t_rtrace *hor, t_rtrace *ver)
-{
-	if(mlxs->ray_ang >= 0 && mlxs->ray_ang <= (M_PI))
-	{
-		hor->is_up = 1;
-		ver->is_up = 1;
-	}
-	else if (mlxs->ray_ang >= (M_PI / 2) && mlxs->ray_ang <= ((3 * M_PI) / 2))
-	{
-		hor->is_left = 0;
-		ver->is_left = 0;
-	}
 }
 void	cast_rays2(t_mlx *mlxs, int col)
 {
 	t_rtrace hor;
 	t_rtrace ver;
-
-	set_ray_ang(mlxs, &hor, &ver);
 
 	hor = h_interS(mlxs);
 	ver = v_interS(mlxs);
@@ -136,13 +145,5 @@ void	cast_rays2(t_mlx *mlxs, int col)
 		mlxs->y_hit = hor.n_y;
 		wall_projection(*mlxs, hor.dis, col);
 	}
-	
-		// hor ->
-	//       x and y first inter
-	//       x and y step
-	// ver
-	//       x and y first inter
-	//       x and y step
 }
-
 

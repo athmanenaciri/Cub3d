@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw2.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/16 15:31:33 by anaciri           #+#    #+#             */
+/*   Updated: 2023/06/16 18:42:29 by anaciri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include"cub3D.h"
 #include <math.h>
 
@@ -26,7 +38,7 @@ void	find_player(t_mlx *mlxs)
 		while(x < mlxs->map.map_width)
 		{
 
-			if(!ft_strchr(mlxs->map.lines[y][x], "NESW"))
+			if(ft_strchr(mlxs->map.lines[y][x], "NESW"))
 			{
 				store = mlxs->map.lines[y][x];
 				mlxs->map.lines[y][x] = '0';
