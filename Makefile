@@ -1,37 +1,46 @@
 
+NAME = cub3D
+
+B_NAME = cub3D_bonus
+
 CC = cc -g
 
-CFLAGS = -Wall -Werror -Wextra -g
-DBUILD = build
-FILES = get_next_line getnext_utils parsing parsing_utils main draw about_lines \
-	cast_rays2 ft_split map_content events2 wall_projection ft_atoi images parsing_texture\
-	init draw2
+CFLAGS = -Wall -Werror -Wextra -Ofast
 
-	
+DBUILD = build/M_CUB3D
+
+B_BUILD = build/B_CUB3D
+
+FILES = get_next_line getnext_utils parsing parsing_utils main draw about_lines \
+	cast_rays ft_split map_content events2 wall_projection ft_atoi images parsing_texture\
+	init 
+
 OBJS = $(addprefix $(DBUILD)/, $(FILES:=.o))
 
-NAME = cub3d
+B_OBJS = $(addprefix $(B_BUILD)/, $(FILES:=.o))
 
 all: $(NAME)
 
-# $(NAME): $(OBJS)
-# 	$(CC) $^ -o $@ -Lmlx -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz 
-#
-# $(DBUILD)/%.o: %.c cub3D.h
-# 	@mkdir -p $(@D)
-# 	$(CC) $(CFLAGS) -I/usr/include -Imlx -c $< -o $@ # -I ./mlx
+bonus : $(B_NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $^ -o $@  -lmlx -framework OpenGL -framework AppKit #-fsanitize=address
+	$(CC) $^ -o $@  -lmlx -framework OpenGL -framework AppKit
 
-$(DBUILD)/%.o: %.c cub3D.h
+$(B_NAME): $(B_OBJS)
+	$(CC) $^ -o $@ -lmlx -framework OpenGL -framework AppKit
+
+$(DBUILD)/%.o: M_CUB3D/%.c M_CUB3D/cub3D.h
 	@mkdir -p $(DBUILD)
 	$(CC) -c $< -o $@ -Imlx
 
+$(B_BUILD)/%.o: B_CUB3D/%.c B_CUB3D/cub3D_bonus.h
+	@mkdir -p $(B_BUILD)
+	$(CC) -c $< -o $@ -Imlx
 
 clean:
-	@rm -rf $(OBJ) $(DBUILD)
+	@rm -rf build
 fclean: clean
 	@rm -f $(NAME)
+	@rm -f $(B_NAME)
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:54:10 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/07 15:39:15 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/15 21:38:27 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	ft_atoi(char *str)
 	i = 0;
 	while (str[i] && str[i] == ' ')
 		i++;
+	if (!str[i] || str[i] == '\n')
+		return (p_err("Error in color value\n", 0), -1);
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		nb = nb * 10 + str[i] - '0';

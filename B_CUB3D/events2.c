@@ -1,4 +1,4 @@
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 double	normalize_ang(double ang)
 {
@@ -20,9 +20,9 @@ int	ft_exit(t_mlx *mlxs)
 void	handel_key(double *x, double *y, t_mlx *mlxs)
 {
 	if (mlxs->keys.r_left)
-		mlxs->p_ang -= to_rad(5);
+		mlxs->p_ang -= to_rad(6);
 	if (mlxs->keys.r_right)
-		mlxs->p_ang += to_rad(5);
+		mlxs->p_ang += to_rad(6);
 	if (mlxs->keys.w)
 	{
 		*x = mlxs->x_p + cos(mlxs->p_ang) * 15;
@@ -116,6 +116,31 @@ void	chng_ang(t_mlx *mlxs)
 	mlxs->p_ang = normalize_ang(mlxs->p_ang);
 }
 
+int	wall_colision(t_mlx *mlxs, double x, double y)
+{
+	int xi;
+	int	yi;
+
+	xi = x - 5;
+	while (xi < x + 5)
+	{
+		yi = y - 5;
+		while (yi < y + 5)
+		{
+			if (x < 0 || x / mlxs->tile >= mlxs->map.map_width || y < 0 || y / mlxs->tile >= mlxs->map.map_height)
+			{
+				yi++;
+				continue ;
+			}
+			if (mlxs->map.lines[(int)(yi / mlxs->tile)][(int)xi / mlxs->tile] == '1')
+				return (0);
+			yi++;
+		}
+		xi++;
+	}
+	return (1);
+}
+
 int	ft_key_hook(t_mlx *mlxs)
 {
 	double	x;
@@ -126,7 +151,7 @@ int	ft_key_hook(t_mlx *mlxs)
 		if (mlxs->keys.event)
 		{
 			handel_key(&x, &y, mlxs);
-			if (mlxs->map.lines[(int)(y / mlxs->tile)][(int)x / mlxs->tile] != '1')
+			if (wall_colision(mlxs, x, y))//mlxs->map.lines[(int)(y / mlxs->tile)][(int)x / mlxs->tile] != '1')
 			{
 				mlxs->x_p = x;
 				mlxs->y_p = y;

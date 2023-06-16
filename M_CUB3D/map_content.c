@@ -8,19 +8,19 @@ int	map_sides(t_map *map)
 	i = 0;
 	j = 0;
 	while (map->lines[i][j])
-		if (map->lines[i][j++] == '0')
+		if (ft_strchr(map->lines[i][j++], "0NSWE"))
 			return (1);
 	j = 0;
 	while (map->lines[map->map_height - 1][j])
-		if (map->lines[map->map_height - 1][j++] == '0')
+		if (ft_strchr(map->lines[map->map_height - 1][j++], "0NSWE"))
 			return (1);
 	j = 0;
 	while (j < map->map_height && map->lines[j][0])
-		if (map->lines[j++][0] == '0')
+		if (ft_strchr(map->lines[j++][0], "0NSWE"))
 			return (1);
 	j = -1;
 	while (++j < map->map_height && map->lines[j][ft_strlen(map->lines[j]) - 1])
-		if (map->lines[j][ft_strlen(map->lines[j]) - 1] == '0')
+		if (ft_strchr(map->lines[j][ft_strlen(map->lines[j]) - 1], "0NSWE"))
 			return (1);
 	return (0);
 }

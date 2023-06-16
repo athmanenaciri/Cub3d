@@ -6,13 +6,11 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 16:05:09 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/07 16:03:51 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/16 13:29:05 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-#include "get_next_line.h"
-#include <stdlib.h>
 
 void	check_extension(char *file, char *ext)
 {
@@ -103,7 +101,10 @@ int	parse_map(char *file, t_map *map)
 	fd = ft_open(file);
 	line = parse_texture(fd, map);
 	nb_player = 0;
-	if (parse_map_content(line, map, fd, nb_player) != 1)
-		p_err("player is duplicated\n", 1);
+	nb_player = parse_map_content(line, map, fd, nb_player);
+	if (nb_player == 0)
+		p_err("There's no player\n", 1);
+	else if (nb_player != 1)
+		p_err("Player is duplicated\n", 1);
 	return (1);
 }

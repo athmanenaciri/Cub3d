@@ -6,13 +6,11 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 23:30:16 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/13 19:36:46 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/15 17:14:16 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
-#include <math.h>
-#include <stdio.h>
+#include "cub3D_bonus.h"
 
 void	find_horz_itc(t_mlx *mlxs, t_rtrace *ray_trace)
 {

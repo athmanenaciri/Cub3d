@@ -6,11 +6,11 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:31:37 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/07 15:31:37 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/15 21:43:19 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 void	parse_color(char *line)
 {
@@ -21,7 +21,7 @@ void	parse_color(char *line)
 	comma = 0;
 	while (line[i] && line[i] == ' ')
 		i++;
-	if (line[i] == '\n')
+	if (!line[i] || line[i] == '\n')
 		p_err("Expected color value\n", 1);
 	while (line[i] && line[i] != '\n')
 	{
@@ -61,6 +61,8 @@ int	get_color(char *line, int *n)
 		i++;
 	}
 	free_words(col);
+	if (i != 3)
+		p_err("Error in rgb\n", 1);
 	hex = (nb[0] << 16) + (nb[1] << 8) + nb[2];
 	return (hex);
 }

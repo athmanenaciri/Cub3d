@@ -1,10 +1,4 @@
 #include "cub3D.h"
-#include "minilibx_mms_20200219/mlx.h"
-
-void b()
-{
-	system("leaks cub3d");
-}
 
 int	ft_open(char *file)
 {
@@ -21,7 +15,6 @@ int	main(int ac, char **av)
 	t_mlx	mlxs;
 	t_map	map;
 
-	// atexit(b);
 	if (ac != 2)
 		p_err("Number of arguments\n", 1);
 
@@ -49,9 +42,6 @@ int	main(int ac, char **av)
 	mlx_loop_hook(mlxs.mlx, ft_key_hook, &mlxs);
 	mlx_hook(mlxs.mlx_win, 2, 0, move_player, &mlxs);
 	mlx_hook(mlxs.mlx_win, 3, 0, relase, &mlxs);
-
-	mlx_hook(mlxs.mlx_win, 6, 0, mouse_move, &mlxs);
-	
 	mlx_hook(mlxs.mlx_win, 17, 0, ft_exit, &mlxs);
 	mlx_loop(mlxs.mlx);
 }

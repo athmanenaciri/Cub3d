@@ -9,8 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
-//#include<mlx.h>
-#include "./minilibx_mms_20200219/mlx.h"
+#include <mlx.h>
 #include <sys/fcntl.h>
 #include <unistd.h> 
 #include"get_next_line.h"
@@ -58,23 +57,18 @@ typedef struct s_keys{
 	int	s;
 	int	r_left;
 	int	r_right;
-	int	x_mouse;
-	int	new_x_mouse;
-	int		mouse_move;
 	int		event;
 
 } t_keys;
 
 typedef struct s_mlx
 {
-	int		i;
 	void 	*mlx;
 	void	*mlx_win;
 	t_img	img;
 	int		width;
 	int		height;
 	int		tile;
-	int		mini_tile;
 	double 	x_p;
 	double 	y_p;
 	double 	p_ang;
@@ -137,6 +131,7 @@ t_textu init_text(t_map map, void *mlx);
 
 void	cast_rays2(t_mlx *mlxs, int col); // -------------
 void	draw_rays2(t_mlx *mlxs);//----------------
+void	draw_rays(t_mlx mlxs);//----------------
 
 //-----------------angle------------------------
 double 	to_rad(double degree);
@@ -144,10 +139,7 @@ double	normalize_ang(double ang);
 
 //-----------------DRAW-----------------------
 void	render(t_mlx mlxs);
-void	draw_cub(t_mlx mlxs, int x, int y, int color);
-void	draw_cercle(t_mlx mlxs, double x, double y, int r);
 void	draw_line(t_mlx mlxs, double x1, double y1, double x2, double y2, int color);
-// void	draw_rect(t_mlx mlxs, double x_s, double y_s, double h);
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 
 //--------------events--------------------
@@ -155,7 +147,6 @@ int		ft_key_hook(t_mlx *mlxs);
 int		relase(int key, t_mlx *mlxs);
 int		move_player(int key, t_mlx *mlxs);
 int		ft_exit(t_mlx *mlxs);
-int	mouse_move(int x, int y, t_mlx *mlxs);
 
 
 //---------------------ray_casting---------------------------
