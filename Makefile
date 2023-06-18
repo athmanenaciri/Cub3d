@@ -5,13 +5,13 @@ B_NAME = cub3D_bonus
 
 CC = cc -g
 
-CFLAGS = -Wall -Werror -Wextra -Ofast
+CFLAGS = -Wall -Werror -Wextra
 
 DBUILD = build/M_CUB3D
 
 B_BUILD = build/B_CUB3D
 
-FILES = get_next_line getnext_utils parsing parsing_utils main draw about_lines \
+FILES = get_next_line getnext_utils parsing parsing_utils main draw draw about_lines \
 	cast_rays ft_split map_content events2 wall_projection ft_atoi images parsing_texture\
 	init 
 

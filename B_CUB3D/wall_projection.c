@@ -30,9 +30,25 @@ void	draw_rect(t_mlx mlxs, double x_s, double y_s, double h)
 	t_img	text;
 
 	text = get_text_clr(mlxs);
-	x_offset = fmod(mlxs.x_hit , mlxs.tile) * ((double)text.width / mlxs.tile);
+	// x_offset = fmod(mlxs.x_hit , mlxs.tile) * ((double)text.width / mlxs.tile);
+	// x_offset = fabs(fmod(mlxs.x_hit , mlxs.tile) - mlxs.tile)* ((double)text.width / mlxs.tile);
+	// if (mlxs.v)
+	// 	x_offset = fabs(fmod(mlxs.y_hit , mlxs.tile) - mlxs.tile) * ((double)text.width / mlxs.tile);
+		// x_offset = fmod(mlxs.y_hit , mlxs.tile) * ((double)text.width / mlxs.tile);
 	if (mlxs.v)
-		x_offset = fmod(mlxs.y_hit , mlxs.tile) * ((double)text.width / mlxs.tile);
+	{
+		if (mlxs.ray_ang >= M_PI / 2 && mlxs.ray_ang <= (3 * M_PI) / 2)
+			x_offset = fabs(fmod(mlxs.y_hit , mlxs.tile) - mlxs.tile) * ((double)text.width / mlxs.tile);
+		else
+			x_offset = fmod(mlxs.y_hit , mlxs.tile) * ((double)text.width / mlxs.tile);
+	}
+	else
+	{
+		if (mlxs.ray_ang > 0 && mlxs.ray_ang <= M_PI)
+			x_offset = fabs(fmod(mlxs.x_hit , mlxs.tile) - mlxs.tile)* ((double)text.width / mlxs.tile);
+		else
+			x_offset = fmod(mlxs.x_hit , mlxs.tile) * ((double)text.width / mlxs.tile);
+	}
 	y = 0;
 	while (y < h && y < mlxs.height)
 	{

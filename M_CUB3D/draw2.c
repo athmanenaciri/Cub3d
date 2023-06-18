@@ -26,7 +26,7 @@ void	find_player(t_mlx *mlxs)
 		while(x < mlxs->map.map_width)
 		{
 
-			if(!ft_strchr(mlxs->map.lines[y][x], "NESW"))
+			if(ft_strchr(mlxs->map.lines[y][x], "NESW"))
 			{
 				store = mlxs->map.lines[y][x];
 				mlxs->map.lines[y][x] = '0';

@@ -32,9 +32,9 @@ int	main(int ac, char **av)
 	mlxs.img.img = mlx_new_image(mlxs.mlx, mlxs.width, mlxs.height);
 	if (!mlxs.img.img)
 		return (mlx_destroy_window(mlxs.mlx, mlxs.mlx_win), p_err("mlx_init Failed\n", 1), 1);
-	mlxs.text = init_text(map, mlxs.mlx);
-
 	get_data_img(&mlxs.img);
+
+	mlxs.text = init_text(map, mlxs.mlx);
 
 	find_player(&mlxs);
 	render(mlxs);

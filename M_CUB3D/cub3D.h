@@ -129,8 +129,8 @@ t_map initialize_t_map(void);
 t_textu init_text(t_map map, void *mlx);
 //-------------------------------------------
 
-void	cast_rays2(t_mlx *mlxs, int col); // -------------
-void	draw_rays2(t_mlx *mlxs);//----------------
+// void	cast_rays2(t_mlx *mlxs, int col); // -------------
+// void	draw_rays2(t_mlx *mlxs);//----------------
 void	draw_rays(t_mlx mlxs);//----------------
 
 //-----------------angle------------------------

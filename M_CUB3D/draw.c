@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:09:49 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/14 23:40:58 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/16 19:59:04 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ double to_rad(double degree)
  		if (mlxs.ray_ang >= M_PI / 2 && mlxs.ray_ang <= (3 *M_PI) / 2)
  			is_left = 1;
  		cast_rays(&mlxs, col, is_up, is_left);
+		// cast_rays2(&mlxs, col);
  		col++;
  		mlxs.ray_ang += incr;
  	}

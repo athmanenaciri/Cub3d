@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:09:49 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/15 19:33:54 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/18 15:43:25 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	draw_cercle(t_mlx mlxs, double x, double y, int r) // NOTE : VALID
 		}
 		xx += 1;
 	}
-	draw_line(mlxs, x, y, x + cos(mlxs.p_ang) * 20, y + sin(mlxs.p_ang) * 20, 0xff0000);
+	// draw_line(mlxs, x, y, x + cos(mlxs.p_ang) * 20, y + sin(mlxs.p_ang) * 20, 0xff0000);
 }
 
 int	check_cercle(t_mlx mlxs, int center, double x, double y)
@@ -139,7 +139,7 @@ void	draw_mini_map(t_mlx mlxs)
 		x++;
 		xi++;
 	}
-	draw_cercle(mlxs, 2 * mlxs.tile, 2 * mlxs.tile, 3);
+	draw_cercle(mlxs, 2 * mlxs.tile, 2 * mlxs.tile, 10);
 
 }
 

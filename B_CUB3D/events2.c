@@ -120,12 +120,14 @@ int	wall_colision(t_mlx *mlxs, double x, double y)
 {
 	int xi;
 	int	yi;
+	int	air;
 
-	xi = x - 5;
-	while (xi < x + 5)
+	air = 5;
+	xi = x - air;
+	while (xi < x + air)
 	{
-		yi = y - 5;
-		while (yi < y + 5)
+		yi = y - air;
+		while (yi < y + air)
 		{
 			if (x < 0 || x / mlxs->tile >= mlxs->map.map_width || y < 0 || y / mlxs->tile >= mlxs->map.map_height)
 			{

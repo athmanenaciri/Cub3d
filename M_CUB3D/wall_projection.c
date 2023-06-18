@@ -59,7 +59,7 @@ void	draw_floor_or_ceil(t_mlx mlxs, double x, double y, double h, int color)
 void	wall_projection(t_mlx mlxs, double dis, int col)
 {
 	double	dis_plan;
-	double	height_plan;
+	double	wall_height;
 	double 	corr_dis;
 	double 	half_width;
 	double	yi;
@@ -67,17 +67,18 @@ void	wall_projection(t_mlx mlxs, double dis, int col)
 	corr_dis = dis * cos(mlxs.ray_ang - mlxs.p_ang);
 	dis = corr_dis;
 	half_width = (double)mlxs.width / 2;
-	dis_plan =  half_width / tan(to_rad(FOV / 2));
-	height_plan = (mlxs.tile / dis) * dis_plan;
-	yi = ((double)mlxs.height / 2) - (height_plan / 2);
+	dis_plan = half_width / tan(to_rad(FOV / 2));
+	// wall_height = (mlxs.tile / dis) * dis_plan;
+	wall_height = (mlxs.tile / dis) * mlxs.height;
+	yi = ((double)mlxs.height / 2) - (wall_height / 2);
 	if (yi < 0)
 		yi = 0;
-	if (height_plan >= mlxs.height)
-		draw_rect(mlxs, col, 0, height_plan); 
+	if (wall_height >= mlxs.height)
+		draw_rect(mlxs, col, 0, wall_height); 
 	else
 	{
-		draw_rect(mlxs, col, yi, height_plan); 
+		draw_rect(mlxs, col, yi,wall_height); 
 		draw_floor_or_ceil(mlxs, col, 0, yi, mlxs.map.ceil_hex);
-		draw_floor_or_ceil(mlxs, col, yi + height_plan, mlxs.height, mlxs.map.floor_hex); 
+		draw_floor_or_ceil(mlxs, col, yi + wall_height, mlxs.height, mlxs.map.floor_hex); 
 	}
 }

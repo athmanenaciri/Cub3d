@@ -20,9 +20,9 @@ int	ft_exit(t_mlx *mlxs)
 void	handel_key(double *x, double *y, t_mlx *mlxs)
 {
 	if (mlxs->keys.r_left)
-		mlxs->p_ang -= to_rad(5);
+		mlxs->p_ang -= to_rad(2);
 	if (mlxs->keys.r_right)
-		mlxs->p_ang += to_rad(5);
+		mlxs->p_ang += to_rad(2);
 	if (mlxs->keys.w)
 	{
 		*x = mlxs->x_p + cos(mlxs->p_ang) * 10;
@@ -98,6 +98,8 @@ int	ft_key_hook(t_mlx *mlxs)
 	if (mlxs->keys.event)
 	{
 		handel_key(&x, &y, mlxs);
+		if (x < 0 || y < 0 || x / mlxs->tile >= mlxs->map.map_width || y / mlxs->tile >= mlxs->map.map_height)
+			return (1);
 		if (mlxs->map.lines[(int)(y / mlxs->tile)][(int)x / mlxs->tile] != '1')
 		{
 			mlxs->x_p = x;
