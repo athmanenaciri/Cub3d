@@ -49,14 +49,14 @@ typedef struct s_textures{
 
 
 typedef struct s_keys{
-	int	a;
-	int	d;
-	int	w;
-	int	s;
-	int	r_left;
-	int	r_right;
-	int	x_mouse;
-	int	new_x_mouse;
+	int		a;
+	int		d;
+	int		w;
+	int		s;
+	int		r_left;
+	int		r_right;
+	int		x_mouse;
+	int		new_x_mouse;
 	int		mouse_move;
 	int		event;
 
