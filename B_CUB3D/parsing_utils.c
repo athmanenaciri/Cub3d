@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 19:41:00 by anaciri           #+#    #+#             */
+/*   Updated: 2023/06/18 20:06:06 by anaciri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D_bonus.h"
 
-int ft_strchr(char c, char *ref)
+int	ft_strchr(char c, char *ref)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (ref[i])
@@ -14,31 +26,31 @@ int ft_strchr(char c, char *ref)
 	return (0);
 }
 
-char* ft_strdup(char* str)
+char	*ft_strdup(char *str)
 {
-    size_t len;
-    char* copy; 
-	size_t i; 
+	size_t	len;
+	char	*copy;
+	size_t	i;
 
 	len = strlen(str);
-	copy = (char*)malloc(len + 1);
+	copy = (char *)malloc(len + 1);
 	if (!copy)
 		p_err("malloc error\n", 0);
 	i = 0;
-	while(i <= len)
+	while (i <= len)
 	{
 		copy[i] = str[i];
 		i++;
 	}
-    return (copy);
+	return (copy);
 }
 
 int	ft_strcmp(char *s1, char *s2)
 {
-	int i;	
+	int	i;	
 
 	i = 0;
-	while (s1[i] && s2[i])	
+	while (s1[i] && s2[i])
 	{
 		if (s1[i] != s2[i])
 			return (s1[i] - s2[i]);
@@ -49,10 +61,10 @@ int	ft_strcmp(char *s1, char *s2)
 
 int	ft_strncmp(char *s1, char *s2, int n)
 {
-	int i;	
+	int	i;	
 
 	i = 0;
-	while (s1[i] && s2[i] && n--)	
+	while (s1[i] && s2[i] && n--)
 	{
 		if (s1[i] != s2[i])
 			return (s1[i] - s2[i]);

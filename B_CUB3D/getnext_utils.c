@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:56:53 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/15 17:18:17 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/18 20:05:21 by anaciri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ ssize_t	ft_strlen(char *str)
 char	*ft_strncpy(char *dst, char *src, ssize_t dstsize)
 {
 	ssize_t	j;
-//	ssize_t	i;
 
-	//i = ft_strlen(src);   hena i makhdemtiche biha 
 	if (dstsize == 0)
 		return (dst);
 	j = 0;
@@ -56,4 +54,3 @@ char	*get_strnjoin(char *s1, char *s2, ssize_t i)
 	free (s1);
 	return (join);
 }
-

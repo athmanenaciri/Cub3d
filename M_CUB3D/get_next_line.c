@@ -6,12 +6,11 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:55:48 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/15 18:04:38 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/18 19:17:57 by anaciri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
 
 char	*ft_strndup(char *s1, ssize_t n, ssize_t *fail)
 {

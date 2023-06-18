@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 19:18:07 by anaciri           #+#    #+#             */
+/*   Updated: 2023/06/18 19:23:01 by anaciri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-#include <stdlib.h>
+# include<unistd.h> 
 
 //get_next_line.c file
 char	*ft_strndup(char *s1, ssize_t n, ssize_t *fail);
@@ -14,6 +26,5 @@ char	*get_next_line(int fd);
 ssize_t	ft_strlen(char *str);
 char	*ft_strncpy(char *dst, char *src, ssize_t dstsize);
 char	*get_strnjoin(char *s1, char *s2, ssize_t i);
-
 
 #endif

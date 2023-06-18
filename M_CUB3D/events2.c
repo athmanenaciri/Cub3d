@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 19:15:41 by anaciri           #+#    #+#             */
+/*   Updated: 2023/06/18 19:16:35 by anaciri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 double	normalize_ang(double ang)
@@ -5,7 +17,7 @@ double	normalize_ang(double ang)
 	if (ang >= 2 * M_PI)
 		ang -= 2 * M_PI;
 	if (ang < 0)
-		ang += 2 * M_PI; 
+		ang += 2 * M_PI;
 	return (ang);
 }
 
@@ -98,7 +110,8 @@ int	ft_key_hook(t_mlx *mlxs)
 	if (mlxs->keys.event)
 	{
 		handel_key(&x, &y, mlxs);
-		if (x < 0 || y < 0 || x / mlxs->tile >= mlxs->map.map_width || y / mlxs->tile >= mlxs->map.map_height)
+		if (x < 0 || y < 0 || x / mlxs->tile >= mlxs->map.map_width
+			|| y / mlxs->tile >= mlxs->map.map_height)
 			return (1);
 		if (mlxs->map.lines[(int)(y / mlxs->tile)][(int)x / mlxs->tile] != '1')
 		{

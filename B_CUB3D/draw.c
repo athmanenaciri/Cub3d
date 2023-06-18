@@ -6,62 +6,80 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:09:49 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/18 15:43:25 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/18 20:24:45 by anaciri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D_bonus.h"
 
-double to_rad(double degree)
+double	calcul_distance(t_mlx mlxs, t_rtrace ray)
+{
+	double	d;
+	double	dx;
+	double	dy;
+
+	dx = pow(ray.n_x - mlxs.x_p, 2);
+	dy = pow(ray.n_y - mlxs.y_p, 2);
+	d = sqrt(dx + dy);
+	return (d);
+}
+
+double	to_rad(double degree)
 {
 	return (degree * M_PI / 180);
 }
 
- void	draw_rays(t_mlx mlxs)
- {
- 	int		col;
- 	double	incr;
- 	int		is_up;
- 	int		is_left;
- 	
- 	col = 0;
- 	incr = to_rad(FOV)	/ mlxs.width;
- 	mlxs.ray_ang = mlxs.p_ang - (to_rad(FOV) / 2); 
- 	while (col < mlxs.width)
- 	{
- 		is_left = 0;
- 		is_up = 0;
- 		mlxs.ray_ang = normalize_ang(mlxs.ray_ang);
- 		if (mlxs.ray_ang > 0 && mlxs.ray_ang <= M_PI)
- 			is_up = 1;
- 		if (mlxs.ray_ang >= M_PI / 2 && mlxs.ray_ang <= (3 *M_PI) / 2)
- 			is_left = 1;
- 		cast_rays(&mlxs, col, is_up, is_left);
- 		col++;
- 		mlxs.ray_ang += incr;
- 	}
+void	draw_rays(t_mlx	mlxs)
+{
+	int		col;
+	double	incr;
+	int		is_up;
+	int		is_left;
+
+	col = 0;
+	incr = to_rad(FOV) / mlxs.width;
+	mlxs.ray_ang = mlxs.p_ang - (to_rad(FOV) / 2);
+	while (col < mlxs.width)
+	{
+		is_left = 0;
+		is_up = 0;
+		mlxs.ray_ang = normalize_ang(mlxs.ray_ang);
+		if (mlxs.ray_ang > 0 && mlxs.ray_ang <= M_PI)
+			is_up = 1;
+		if (mlxs.ray_ang >= M_PI / 2 && mlxs.ray_ang <= (3 * M_PI) / 2)
+			is_left = 1;
+		cast_rays(&mlxs, col, is_up, is_left);
+		col++;
+		mlxs.ray_ang += incr;
+	}
 }
 
-void	draw_line(t_mlx mlxs, double x1, double y1, double x2, double y2, int color)
+void	draw_line(t_mlx mlxs, double x1, double y1,
+			double x2, double y2, int color)
 {
-	float x, y, xi, yi;
-	double dx, dy;
-	int num_step, i;
+	float	x;
+	float	y;
+	float	xi;
+	float	yi;
+	double	dx;
+	double	dy;
+	int		num_step;
+	int		i;
 
 	i = 0;
 	x = x1;
 	y = y1;
 	dx = x2 - x;
 	dy = y2 - y;
-	num_step = fabs(dy);	
+	num_step = fabs(dy);
 	if (fabs(dx) > fabs(dy))
 		num_step = fabs(dx);
 	xi = (float)dx / num_step;
-	yi = (float)dy /num_step;
+	yi = (float)dy / num_step;
 	while (i < num_step)
 	{
 		my_mlx_pixel_put(&mlxs.img, x, y, color);
-		x += xi;	
+		x += xi;
 		y += yi;
 		i++;
 	}
@@ -69,12 +87,14 @@ void	draw_line(t_mlx mlxs, double x1, double y1, double x2, double y2, int color
 
 void	draw_cercle(t_mlx mlxs, double x, double y, int r) // NOTE : VALID
 {
-	double xx = 0;
-	double yy = 0;
-	double dx;
-	double dy;
-	double d;
+	double	xx;
+	double	yy;
+	double	dx;
+	double	dy;
+	double	d;
 
+	yy = 0;
+	xx = 0;
 	while (xx < mlxs.width)	
 	{
 		yy = 0;

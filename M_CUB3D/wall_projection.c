@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wall_projection.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 19:45:27 by anaciri           #+#    #+#             */
+/*   Updated: 2023/06/18 19:49:11 by anaciri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
-#include <math.h>
 
 t_img	get_text_clr(t_mlx mlxs)
 {
@@ -29,20 +40,19 @@ int	get_x_offset(t_mlx mlxs, t_img text)
 	if (mlxs.v)
 	{
 		if (mlxs.ray_ang >= M_PI / 2 && mlxs.ray_ang <= (3 * M_PI) / 2)
-			x_offset = fabs(fmod(mlxs.y_hit , mlxs.tile) - mlxs.tile);
+			x_offset = fabs(fmod(mlxs.y_hit, mlxs.tile) - mlxs.tile);
 		else
-			x_offset = fmod(mlxs.y_hit , mlxs.tile);
+			x_offset = fmod(mlxs.y_hit, mlxs.tile);
 	}
 	else
 	{
 		if (mlxs.ray_ang > 0 && mlxs.ray_ang <= M_PI)
-			x_offset = fabs(fmod(mlxs.x_hit , mlxs.tile) - mlxs.tile);
+			x_offset = fabs(fmod(mlxs.x_hit, mlxs.tile) - mlxs.tile);
 		else
-			x_offset = fmod(mlxs.x_hit , mlxs.tile);
+			x_offset = fmod(mlxs.x_hit, mlxs.tile);
 	}
 	x_offset *= (double)text.width / mlxs.tile;
 	return (x_offset);
-
 }
 
 void	draw_rect(t_mlx mlxs, double x_s, double y_s, double h)
@@ -69,20 +79,19 @@ void	draw_rect(t_mlx mlxs, double x_s, double y_s, double h)
 
 void	draw_floor_or_ceil(t_mlx mlxs, double x, double y, double h, int color)
 {
-	while (y < h)	
+	while (y < h)
 	{
 		my_mlx_pixel_put(&mlxs.img, x, y, color);
 		y++;
 	}
 }
 
-
 void	wall_projection(t_mlx mlxs, double dis, int col)
 {
 	double	dis_plan;
 	double	wall_height;
-	double 	corr_dis;
-	double 	half_width;
+	double	corr_dis;
+	double	half_width;
 	double	yi;
 
 	corr_dis = dis * cos(mlxs.ray_ang - mlxs.p_ang);
@@ -94,11 +103,12 @@ void	wall_projection(t_mlx mlxs, double dis, int col)
 	if (yi < 0)
 		yi = 0;
 	if (wall_height >= mlxs.height)
-		draw_rect(mlxs, col, 0, wall_height); 
+		draw_rect(mlxs, col, 0, wall_height);
 	else
 	{
-		draw_rect(mlxs, col, yi,wall_height); 
+		draw_rect(mlxs, col, yi, wall_height);
 		draw_floor_or_ceil(mlxs, col, 0, yi, mlxs.map.ceil_hex);
-		draw_floor_or_ceil(mlxs, col, yi + wall_height, mlxs.height, mlxs.map.floor_hex); 
+		draw_floor_or_ceil(mlxs, col, yi
+			+ wall_height, mlxs.height, mlxs.map.floor_hex);
 	}
 }
