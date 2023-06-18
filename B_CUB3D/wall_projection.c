@@ -21,6 +21,28 @@ t_img	get_text_clr(t_mlx mlxs)
 	return (text);
 }
 
+int	get_x_offset(t_mlx mlxs, t_img text)
+{
+	int	x_offset;
+
+	if (mlxs.v)
+	{
+		if (mlxs.ray_ang >= M_PI / 2 && mlxs.ray_ang <= (3 * M_PI) / 2)
+			x_offset = fabs(fmod(mlxs.y_hit , mlxs.tile) - mlxs.tile);
+		else
+			x_offset = fmod(mlxs.y_hit , mlxs.tile);
+	}
+	else
+	{
+		if (mlxs.ray_ang > 0 && mlxs.ray_ang <= M_PI)
+			x_offset = fabs(fmod(mlxs.x_hit , mlxs.tile) - mlxs.tile);
+		else
+			x_offset = fmod(mlxs.x_hit , mlxs.tile);
+	}
+	x_offset *= (double)text.width / mlxs.tile;
+	return (x_offset);
+}
+
 void	draw_rect(t_mlx mlxs, double x_s, double y_s, double h)
 {
 	double	y;
@@ -30,25 +52,7 @@ void	draw_rect(t_mlx mlxs, double x_s, double y_s, double h)
 	t_img	text;
 
 	text = get_text_clr(mlxs);
-	// x_offset = fmod(mlxs.x_hit , mlxs.tile) * ((double)text.width / mlxs.tile);
-	// x_offset = fabs(fmod(mlxs.x_hit , mlxs.tile) - mlxs.tile)* ((double)text.width / mlxs.tile);
-	// if (mlxs.v)
-	// 	x_offset = fabs(fmod(mlxs.y_hit , mlxs.tile) - mlxs.tile) * ((double)text.width / mlxs.tile);
-		// x_offset = fmod(mlxs.y_hit , mlxs.tile) * ((double)text.width / mlxs.tile);
-	if (mlxs.v)
-	{
-		if (mlxs.ray_ang >= M_PI / 2 && mlxs.ray_ang <= (3 * M_PI) / 2)
-			x_offset = fabs(fmod(mlxs.y_hit , mlxs.tile) - mlxs.tile) * ((double)text.width / mlxs.tile);
-		else
-			x_offset = fmod(mlxs.y_hit , mlxs.tile) * ((double)text.width / mlxs.tile);
-	}
-	else
-	{
-		if (mlxs.ray_ang > 0 && mlxs.ray_ang <= M_PI)
-			x_offset = fabs(fmod(mlxs.x_hit , mlxs.tile) - mlxs.tile)* ((double)text.width / mlxs.tile);
-		else
-			x_offset = fmod(mlxs.x_hit , mlxs.tile) * ((double)text.width / mlxs.tile);
-	}
+	x_offset = get_x_offset(mlxs, text);
 	y = 0;
 	while (y < h && y < mlxs.height)
 	{

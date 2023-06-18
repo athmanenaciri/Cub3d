@@ -45,8 +45,6 @@ typedef struct s_textures{
 	t_img	so_text;
 	t_img	we_text;
 	t_img	ea_text;
-	int		x_offset;
-	int		y_offset;
 }	t_textu;
 
 
