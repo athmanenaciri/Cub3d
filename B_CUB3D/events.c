@@ -1,33 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events2.c                                          :+:      :+:    :+:   */
+/*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:04:08 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/18 20:05:12 by anaciri          ###   ########.fr       */
+/*   Updated: 2023/06/19 11:35:17 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D_bonus.h"
-
-double	normalize_ang(double ang)
-{
-	if (ang >= 2 * M_PI)
-		ang -= 2 * M_PI;
-	if (ang < 0)
-		ang += 2 * M_PI; 
-	return (ang);
-}
-
-int	ft_exit(t_mlx *mlxs)
-{
-	mlx_destroy_image(mlxs->mlx, mlxs->img.img);
-	mlx_destroy_window(mlxs->mlx, mlxs->mlx_win);
-	exit(1);
-	return (0);
-}
 
 void	handel_key(double *x, double *y, t_mlx *mlxs)
 {
@@ -57,56 +40,11 @@ void	handel_key(double *x, double *y, t_mlx *mlxs)
 	}
 }
 
-int	move_player(int key, t_mlx *mlxs)
-{
-	mlxs->keys.event = 1;
-	if (key == 53)
-		ft_exit(mlxs);
-	if (key == 123)
-		mlxs->keys.r_left = 1;
-	else if (key == 124)
-		mlxs->keys.r_right = 1;
-	else if (key == 0)
-		mlxs->keys.a = 1;
-	else if (key == 1)
-		mlxs->keys.s = 1;
-	else if (key == 2)
-		mlxs->keys.d = 1;
-	else if (key == 13)
-		mlxs->keys.w = 1;
-	else
-		mlxs->keys.event = 0;
-	return (0);
-}
-
-int	relase(int key, t_mlx *mlxs)
-{
-	int	all_is_relaised;
-
-	if (key == 123)
-		mlxs->keys.r_left = 0;
-	else if (key == 124)
-		mlxs->keys.r_right = 0;
-	else if (key == 0)
-		mlxs->keys.a = 0;
-	else if (key == 1)
-		mlxs->keys.s = 0;
-	else if (key == 2)
-		mlxs->keys.d = 0;
-	else if (key == 13)
-		mlxs->keys.w = 0;
-	all_is_relaised = mlxs->keys.r_left | mlxs->keys.r_right | mlxs->keys.a;
-	all_is_relaised |= mlxs->keys.w | mlxs->keys.d | mlxs->keys.s;
-	if (all_is_relaised == 0)
-		mlxs->keys.event = 0;
-	return (0);
-}
-
 int	mouse_move(int x, int y, t_mlx *mlxs)
 {
 	if (y >= 0 && y < mlxs->height && x >= 0 && x < mlxs->width)
 	{
-		mlxs->keys.new_x_mouse = x;	
+		mlxs->keys.new_x_mouse = x;
 		mlxs->keys.mouse_move = 1;
 	}
 	else
@@ -121,7 +59,7 @@ void	chng_ang(t_mlx *mlxs)
 	tier = (double)mlxs->width / 3;
 	if (mlxs->keys.x_mouse - tier > mlxs->keys.new_x_mouse)
 		mlxs->p_ang -= to_rad(4);
-	else if(mlxs->keys.x_mouse + tier < mlxs->keys.new_x_mouse)
+	else if (mlxs->keys.x_mouse + tier < mlxs->keys.new_x_mouse)
 		mlxs->p_ang += to_rad(4);
 	else
 		mlxs->keys.mouse_move = 0;
@@ -130,7 +68,7 @@ void	chng_ang(t_mlx *mlxs)
 
 int	wall_colision(t_mlx *mlxs, double x, double y)
 {
-	int xi;
+	int	xi;
 	int	yi;
 	int	air;
 
@@ -141,12 +79,14 @@ int	wall_colision(t_mlx *mlxs, double x, double y)
 		yi = y - air;
 		while (yi < y + air)
 		{
-			if (x < 0 || x / mlxs->tile >= mlxs->map.map_width || y < 0 || y / mlxs->tile >= mlxs->map.map_height)
+			if (x < 0 || x / mlxs->tile >= mlxs->map.map_width
+				|| y < 0 || y / mlxs->tile >= mlxs->map.map_height)
 			{
 				yi++;
 				continue ;
 			}
-			if (mlxs->map.lines[(int)(yi / mlxs->tile)][(int)xi / mlxs->tile] == '1')
+			if (mlxs->map.lines[(int)(yi / mlxs->tile)][(int)xi / mlxs->tile]
+				== '1')
 				return (0);
 			yi++;
 		}
@@ -165,13 +105,13 @@ int	ft_key_hook(t_mlx *mlxs)
 		if (mlxs->keys.event)
 		{
 			handel_key(&x, &y, mlxs);
-			if (wall_colision(mlxs, x, y))//mlxs->map.lines[(int)(y / mlxs->tile)][(int)x / mlxs->tile] != '1')
+			if (wall_colision(mlxs, x, y))
 			{
 				mlxs->x_p = x;
 				mlxs->y_p = y;
 			}
 		}
-		if(mlxs->keys.mouse_move)
+		if (mlxs->keys.mouse_move)
 			chng_ang(mlxs);
 		mlx_destroy_image(mlxs->mlx, mlxs->img.img);
 		mlxs->img.img = mlx_new_image(mlxs->mlx, mlxs->width, mlxs->height);

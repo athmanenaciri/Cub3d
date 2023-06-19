@@ -6,7 +6,7 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 19:45:27 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/18 19:49:11 by anaciri          ###   ########.fr       */
+/*   Updated: 2023/06/19 10:43:53 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	get_x_offset(t_mlx mlxs, t_img text)
 	return (x_offset);
 }
 
-void	draw_rect(t_mlx mlxs, double x_s, double y_s, double h)
+void	draw_wall(t_mlx mlxs, double x, double y_s, double h)
 {
 	double	y;
 	double	y_wall;
@@ -71,44 +71,26 @@ void	draw_rect(t_mlx mlxs, double x_s, double y_s, double h)
 		y_wall = y_s - (((double)mlxs.height / 2) - (h / 2));
 		y_offset = y_wall * ((double)text.height / h);
 		mlxs.wall_clr = mlx_get_color(text, x_offset, y_offset);
-		my_mlx_pixel_put(&mlxs.img, x_s, y_s, mlxs.wall_clr);
+		my_mlx_pixel_put(&mlxs.img, x, y_s, mlxs.wall_clr);
 		y++;
 		y_s++;
 	}
 }
 
-void	draw_floor_or_ceil(t_mlx mlxs, double x, double y, double h, int color)
+void	wall_projection(t_mlx mlxs, double dis, int x)
 {
-	while (y < h)
-	{
-		my_mlx_pixel_put(&mlxs.img, x, y, color);
-		y++;
-	}
-}
-
-void	wall_projection(t_mlx mlxs, double dis, int col)
-{
-	double	dis_plan;
 	double	wall_height;
-	double	corr_dis;
-	double	half_width;
-	double	yi;
+	double	start_wall;
 
-	corr_dis = dis * cos(mlxs.ray_ang - mlxs.p_ang);
-	dis = corr_dis;
-	half_width = (double)mlxs.width / 2;
-	dis_plan = half_width / tan(to_rad(FOV / 2));
-	wall_height = (mlxs.tile / dis) * dis_plan;
-	yi = ((double)mlxs.height / 2) - (wall_height / 2);
-	if (yi < 0)
-		yi = 0;
+	get_wall_height(mlxs, dis, &start_wall, &wall_height);
+	if (start_wall < 0)
+		start_wall = 0;
 	if (wall_height >= mlxs.height)
-		draw_rect(mlxs, col, 0, wall_height);
+		draw_wall(mlxs, x, 0, wall_height);
 	else
 	{
-		draw_rect(mlxs, col, yi, wall_height);
-		draw_floor_or_ceil(mlxs, col, 0, yi, mlxs.map.ceil_hex);
-		draw_floor_or_ceil(mlxs, col, yi
-			+ wall_height, mlxs.height, mlxs.map.floor_hex);
+		draw_wall(mlxs, x, start_wall, wall_height);
+		draw_ceil(mlxs, x, 0, start_wall);
+		draw_floor(mlxs, x, start_wall + wall_height, mlxs.height);
 	}
 }

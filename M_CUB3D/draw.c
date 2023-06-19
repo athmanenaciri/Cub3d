@@ -6,29 +6,11 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:09:49 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/18 19:15:04 by anaciri          ###   ########.fr       */
+/*   Updated: 2023/06/19 11:39:01 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-#include <math.h>
-
-double	calcul_distance(t_mlx mlxs, t_rtrace ray)
-{
-	double	d;
-	double	dx;
-	double	dy;
-
-	dx = pow(ray.n_x - mlxs.x_p, 2);
-	dy = pow(ray.n_y - mlxs.y_p, 2);
-	d = sqrt(dx + dy);
-	return (d);
-}
-
-double	to_rad(double degree)
-{
-	return (degree * M_PI / 180);
-}
 
 void	draw_rays(t_mlx mlxs)
 {

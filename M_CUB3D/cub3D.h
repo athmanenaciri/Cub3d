@@ -6,7 +6,7 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 19:23:21 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/18 19:29:59 by anaciri          ###   ########.fr       */
+/*   Updated: 2023/06/19 10:50:14 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,6 @@ t_map	initialize_t_map(void);
 t_textu	init_text(t_map map, void *mlx);
 //-------------------------------------------
 
-// void	cast_rays2(t_mlx *mlxs, int col); // -------------
-// void	draw_rays2(t_mlx *mlxs);//----------------
 void	draw_rays(t_mlx mlxs);//----------------
 
 //-----------------angle------------------------
@@ -146,8 +144,10 @@ double	normalize_ang(double ang);
 
 //-----------------DRAW-----------------------
 void	render(t_mlx mlxs);
-void	draw_line(t_mlx mlxs, double x1, double y1, double x2, double y2, int color);
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+void	draw_floor(t_mlx mlxs, double x, double y, double h);
+void	draw_ceil(t_mlx mlxs, double x, double y, double h);
+void	get_wall_height(t_mlx mlxs, double dis, double *yi, double *height);
 
 //--------------events--------------------
 int		ft_key_hook(t_mlx *mlxs);

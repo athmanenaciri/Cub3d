@@ -6,7 +6,7 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 23:30:16 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/18 19:08:40 by anaciri          ###   ########.fr       */
+/*   Updated: 2023/06/18 20:58:03 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ void	find_horz_itc(t_mlx *mlxs, t_rtrace *ray_trace)
 	ray_trace->y_step = mlxs->tile;
 	if (!ray_trace->is_up)
 		ray_trace->y_step *= -1;
-	ray_trace->x_step = fabs(mlxs->tile / tan_ang);
-	if (ray_trace->is_left)
-		ray_trace->x_step *= -1;
+	ray_trace->x_step = ray_trace->y_step / tan_ang;
 }
 
 void	find_ver_itc(t_mlx *mlxs, t_rtrace *ray_trace)
@@ -41,9 +39,7 @@ void	find_ver_itc(t_mlx *mlxs, t_rtrace *ray_trace)
 	ray_trace->x_step = mlxs->tile;
 	if (ray_trace->is_left)
 		ray_trace->x_step *= -1;
-	ray_trace->y_step = fabs(mlxs->tile * tan_ang);
-	if (!ray_trace->is_up)
-		ray_trace->y_step *= -1;
+	ray_trace->y_step = ray_trace->x_step * tan_ang;
 }
 
 void	check_horiztl(t_mlx *mlxs, t_rtrace *ray)

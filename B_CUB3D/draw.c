@@ -6,28 +6,11 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:09:49 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/18 20:24:45 by anaciri          ###   ########.fr       */
+/*   Updated: 2023/06/19 13:38:19 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D_bonus.h"
-
-double	calcul_distance(t_mlx mlxs, t_rtrace ray)
-{
-	double	d;
-	double	dx;
-	double	dy;
-
-	dx = pow(ray.n_x - mlxs.x_p, 2);
-	dy = pow(ray.n_y - mlxs.y_p, 2);
-	d = sqrt(dx + dy);
-	return (d);
-}
-
-double	to_rad(double degree)
-{
-	return (degree * M_PI / 180);
-}
 
 void	draw_rays(t_mlx	mlxs)
 {
@@ -54,64 +37,6 @@ void	draw_rays(t_mlx	mlxs)
 	}
 }
 
-void	draw_line(t_mlx mlxs, double x1, double y1,
-			double x2, double y2, int color)
-{
-	float	x;
-	float	y;
-	float	xi;
-	float	yi;
-	double	dx;
-	double	dy;
-	int		num_step;
-	int		i;
-
-	i = 0;
-	x = x1;
-	y = y1;
-	dx = x2 - x;
-	dy = y2 - y;
-	num_step = fabs(dy);
-	if (fabs(dx) > fabs(dy))
-		num_step = fabs(dx);
-	xi = (float)dx / num_step;
-	yi = (float)dy / num_step;
-	while (i < num_step)
-	{
-		my_mlx_pixel_put(&mlxs.img, x, y, color);
-		x += xi;
-		y += yi;
-		i++;
-	}
-}
-
-void	draw_cercle(t_mlx mlxs, double x, double y, int r) // NOTE : VALID
-{
-	double	xx;
-	double	yy;
-	double	dx;
-	double	dy;
-	double	d;
-
-	yy = 0;
-	xx = 0;
-	while (xx < mlxs.width)	
-	{
-		yy = 0;
-		while (yy < mlxs.height)
-		{
-			dx = xx - x;
-			dy = yy - y;
-			d = sqrt(pow(dx,2) + pow(dy, 2));
-			if (d < r)
-				my_mlx_pixel_put(&mlxs.img, xx,yy,0xff0000);
-			yy += 1;
-		}
-		xx += 1;
-	}
-	// draw_line(mlxs, x, y, x + cos(mlxs.p_ang) * 20, y + sin(mlxs.p_ang) * 20, 0xff0000);
-}
-
 int	check_cercle(t_mlx mlxs, int center, double x, double y)
 {
 	double	dis;
@@ -124,48 +49,54 @@ int	check_cercle(t_mlx mlxs, int center, double x, double y)
 	return (0);
 }
 
-void	draw_mini_map(t_mlx mlxs)
+int	is_outside_map(t_mlx mlxs, double xi, double yi)
 {
-	double	xi;
-	double	yi;
+	xi /= mlxs.tile;
+	yi /= mlxs.tile;
+	if (xi < 0 || xi >= mlxs.map.map_width
+		|| yi < 0 || yi >= mlxs.map.map_height)
+		return (1);
+	return (0);
+}
+
+void	draw_mini_map(t_mlx mlxs, double xi, double yi, int center)
+{
 	double	tmp_y;
 	int		x;
 	int		y;
-	int		center = 2 * mlxs.tile;
 
-	xi = mlxs.x_p - (2 * mlxs.tile);
-	yi = mlxs.y_p - (2 * mlxs.tile);
 	tmp_y = yi;
 	x = 0;
-
-	while (xi < mlxs.x_p + (2 * mlxs.tile))
+	while (++xi < mlxs.x_p + (2 * mlxs.tile))
 	{
-		y = 0;
-		yi = tmp_y;
-		while (yi < mlxs.y_p + (2 * mlxs.tile))
+		y = -1;
+		yi = tmp_y - 1;
+		while (++yi < mlxs.y_p + (2 * mlxs.tile))
 		{
-			if (check_cercle(mlxs, center, x, y))
+			if (check_cercle(mlxs, center, x, ++y))
 			{
-				if (xi < 0 || (xi / mlxs.tile >= mlxs.map.map_width) || yi < 0 || (yi / mlxs.tile) >= mlxs.map.map_height)
+				if (is_outside_map(mlxs, xi, yi))
 					my_mlx_pixel_put(&mlxs.img, x, y, 0x000000);
-				else if (mlxs.map.lines[(int)(yi / mlxs.tile)][(int)(xi / mlxs.tile)] == '1')
+				else if (mlxs.map.lines[(int)(yi / mlxs.tile)][(int)(xi
+						/ mlxs.tile)] == '1')
 					my_mlx_pixel_put(&mlxs.img, x, y, 0x888080);
 				else
 					my_mlx_pixel_put(&mlxs.img, x, y, 0xffffff);
 			}
-			yi++;
-			y++;
 		}
 		x++;
-		xi++;
 	}
-	draw_cercle(mlxs, 2 * mlxs.tile, 2 * mlxs.tile, 10);
-
 }
 
 void	render(t_mlx mlxs)
 {
+	double	x_minimap;
+	double	y_minimap;
+
+	x_minimap = mlxs.x_p - (2 * mlxs.tile);
+	y_minimap = mlxs.y_p - (2 * mlxs.tile);
 	draw_rays(mlxs);
-	draw_mini_map(mlxs);
+	draw_mini_map(mlxs, x_minimap - 1, y_minimap, 2 * mlxs.tile);
+	draw_cercle(mlxs, 2 * mlxs.tile, 2 * mlxs.tile, 10);
 	mlx_put_image_to_window(mlxs.mlx, mlxs.mlx_win, mlxs.img.img, 0, 0);
 }
