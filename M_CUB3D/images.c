@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 15:21:49 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/19 11:03:05 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/19 14:04:29 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	get_data_img(t_img	*img)
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
-	char	*dst;
+	void	*dst;
 
-	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	dst = img->addr + (y * img->line_length) + (x * (img->bits_per_pixel / 8));
+	*(int *)dst = color;
 }
 
 int	mlx_get_color(t_img img, int x, int y)
@@ -31,7 +31,7 @@ int	mlx_get_color(t_img img, int x, int y)
 	char	*dst;
 
 	dst = img.addr + (y * img.line_length + x * (img.bits_per_pixel / 8));
-	return (*(unsigned int *)dst);
+	return (*(int *)dst);
 }
 
 t_textu	init_text(t_map map, void *mlx)
