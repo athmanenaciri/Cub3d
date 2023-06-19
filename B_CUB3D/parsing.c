@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 16:05:09 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/18 20:06:08 by anaciri          ###   ########.fr       */
+/*   Updated: 2023/06/19 21:58:52 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	check_extension(char *file, char *ext)
 			return ;
 		file++;
 	}
-	p_err("File sould be folowed with .cub extention\n", 1);
+	p_err("File sould be folowed by .cub extention\n", 1);
 }
 
 char	*parse_texture(int fd, t_map *map)

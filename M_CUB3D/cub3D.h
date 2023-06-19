@@ -6,7 +6,7 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 19:23:21 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/19 10:50:14 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/19 20:43:51 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void	find_player(t_mlx *mlxs);
 t_mlx	initialize_t_mlx(t_map map);
 t_map	initialize_t_map(void);
 t_textu	init_text(t_map map, void *mlx);
+void	destroy_mlx(t_mlx *mlxs, int img, int win);
 //-------------------------------------------
 
 void	draw_rays(t_mlx mlxs);//----------------

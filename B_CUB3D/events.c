@@ -6,7 +6,7 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:04:08 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/19 11:35:17 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/19 20:49:38 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ int	ft_key_hook(t_mlx *mlxs)
 			chng_ang(mlxs);
 		mlx_destroy_image(mlxs->mlx, mlxs->img.img);
 		mlxs->img.img = mlx_new_image(mlxs->mlx, mlxs->width, mlxs->height);
+		if (!mlxs->img.img)
+			return (destroy_mlx(mlxs, 0, 1), p_err("init image\n", 1), 1);
 		get_data_img(&mlxs->img);
 		mlx_clear_window(mlxs->mlx, mlxs->mlx_win);
 		render(*mlxs);

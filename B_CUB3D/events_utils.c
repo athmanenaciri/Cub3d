@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 11:30:55 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/19 11:32:48 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/19 20:49:48 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ double	normalize_ang(double ang)
 
 int	ft_exit(t_mlx *mlxs)
 {
-	mlx_destroy_image(mlxs->mlx, mlxs->img.img);
-	mlx_destroy_window(mlxs->mlx, mlxs->mlx_win);
+	destroy_mlx(mlxs, 1, 1);
 	exit(1);
 	return (0);
 }

@@ -3,7 +3,9 @@ NAME = cub3D
 
 B_NAME = cub3D_bonus
 
+# --------g-------
 CC = cc -g
+# --------g-------
 
 CFLAGS = -Wall -Werror -Wextra
 

@@ -6,7 +6,7 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:05:01 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/19 11:19:38 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/19 20:49:00 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@ int	ft_open(char *file)
 	return (fd);
 }
 
+void	destroy_mlx(t_mlx *mlxs, int img, int win)
+{
+	if (img)
+		mlx_destroy_image(mlxs->mlx, mlxs->img.img);
+	mlx_destroy_image(mlxs->mlx, mlxs->text.no_text.img);
+	mlx_destroy_image(mlxs->mlx, mlxs->text.so_text.img);
+	mlx_destroy_image(mlxs->mlx, mlxs->text.ea_text.img);
+	mlx_destroy_image(mlxs->mlx, mlxs->text.we_text.img);
+	if (win)
+		mlx_destroy_window(mlxs->mlx, mlxs->mlx_win);
+}
+
 int	init_mlx(t_mlx	*mlxs, t_map map)
 {
 	*mlxs = initialize_t_mlx(map);
@@ -32,11 +44,10 @@ int	init_mlx(t_mlx	*mlxs, t_map map)
 	mlxs->mlx_win = mlx_new_window(mlxs->mlx, mlxs->width, mlxs->height,
 			"Cub3d");
 	if (!mlxs->mlx_win)
-		p_err("mlx_new_window Failed\n", 1);
+		return (destroy_mlx(mlxs, 0, 0), p_err("mlx_new_window Failed\n", 1), 1);
 	mlxs->img.img = mlx_new_image(mlxs->mlx, mlxs->width, mlxs->height);
 	if (!mlxs->img.img)
-		return (mlx_destroy_window(mlxs->mlx, mlxs->mlx_win),
-			p_err("mlx_init Failed\n", 1), 1);
+		return (destroy_mlx(mlxs, 0, 1), p_err("mlx_init Failed\n", 1), 1);
 	get_data_img(&mlxs->img);
 	find_player(mlxs);
 	render(*mlxs);
