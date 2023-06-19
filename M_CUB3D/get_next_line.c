@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:55:48 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/18 19:17:57 by anaciri          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:46:10 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*get_resteofline(ssize_t n, char **rest)
 
 	line = ft_strndup(*rest, n, &nl);
 	if (line == NULL)
-		return (NULL);
+		p_err("malloc error\n", 1);
 	if (n < ft_strlen(*rest))
 	{
 		tmp = ft_strndup(*rest + n, -1, &nl);
@@ -120,6 +120,6 @@ char	*get_next_line(int fd)
 	rest = NULL;
 	n = read_and_get_line(1, fd, &line, &rest);
 	if (n == -1)
-		return (free(line), NULL);
+		return (free(line), p_err("malloc error\n", 1), NULL);
 	return (line);
 }

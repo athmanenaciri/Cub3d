@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 11:28:03 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/19 11:30:31 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/19 16:01:14 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_exit(t_mlx *mlxs)
 {
 	mlx_destroy_image(mlxs->mlx, mlxs->img.img);
 	mlx_destroy_window(mlxs->mlx, mlxs->mlx_win);
+	// free(mlxs->mlx);
 	exit(1);
 	return (0);
 }

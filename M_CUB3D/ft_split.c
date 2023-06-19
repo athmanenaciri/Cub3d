@@ -6,7 +6,7 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 19:17:30 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/18 19:17:32 by anaciri          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:52:41 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_str(char *s, char c, char **strs)
 	if (str == NULL)
 	{
 		free_words(strs);
-		exit(1);
+		p_err("error split\n", 1);
 	}
 	ft_strncpy(str, s, i);
 	return (str);
@@ -89,7 +89,7 @@ char	**ft_split(char *s, char c)
 	count_str = count(s, c);
 	strs = malloc(sizeof(char *) * (count_str + 1));
 	if (strs == NULL)
-		exit (1);
+		p_err("malloc error\n", 1);
 	i = 0;
 	while (i < count_str)
 	{

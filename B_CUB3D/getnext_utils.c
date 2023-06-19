@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:56:53 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/18 20:05:21 by anaciri          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:54:34 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*get_strnjoin(char *s1, char *s2, ssize_t i)
 	len = ft_strlen(s1);
 	join = malloc(sizeof(char) * (len + i + 1));
 	if (join == NULL)
-		return (NULL);
+		p_err("malloc error\n", 1);
 	ft_strncpy(join, s1, len);
 	ft_strncpy(join + len, s2, i);
 	free (s1);
