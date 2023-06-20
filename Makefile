@@ -3,9 +3,7 @@ NAME = cub3D
 
 B_NAME = cub3D_bonus
 
-# --------g-------
-CC = cc -g
-# --------g-------
+CC = cc
 
 CFLAGS = -Wall -Werror -Wextra
 
@@ -31,11 +29,11 @@ $(NAME): $(OBJS)
 $(B_NAME): $(B_OBJS)
 	$(CC) $^ -o $@ -lmlx -framework OpenGL -framework AppKit
 
-$(DBUILD)/%.o: M_CUB3D/%.c M_CUB3D/cub3D.h
+$(DBUILD)/%.o: M_CUB3D/%.c M_CUB3D/cub3D.h M_CUB3D/get_next_line.h
 	@mkdir -p $(DBUILD)
 	$(CC) -c $< -o $@ -Imlx
 
-$(B_BUILD)/%.o: B_CUB3D/%.c B_CUB3D/cub3D_bonus.h
+$(B_BUILD)/%.o: B_CUB3D/%.c B_CUB3D/cub3D_bonus.h B_CUB3D/get_next_line.h
 	@mkdir -p $(B_BUILD)
 	$(CC) -c $< -o $@ -Imlx
 

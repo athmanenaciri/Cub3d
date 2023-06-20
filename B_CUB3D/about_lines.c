@@ -6,13 +6,13 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:56:07 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/18 20:03:36 by anaciri          ###   ########.fr       */
+/*   Updated: 2023/06/20 15:31:58 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D_bonus.h"
 
-int	empty_line(char *line)
+int	empty_line(char *line, int fd)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ int	empty_line(char *line)
 	while (line[i])
 	{
 		if (line[i] == '\t')
-			return (free(line), p_err("Character not expected\n", 0), 0);
+			return (close(fd), free(line), p_err("unexpected code\n", 1), 0);
 		if (line[i] != ' ' && line[i] != '\n')
 			return (0);
 		i++;

@@ -6,11 +6,12 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:05:01 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/19 20:49:00 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/20 16:05:24 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D_bonus.h"
+#include <stdlib.h>
 
 int	ft_open(char *file)
 {

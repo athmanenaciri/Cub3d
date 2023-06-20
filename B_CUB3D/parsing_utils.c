@@ -6,7 +6,7 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 19:41:00 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/19 19:23:41 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/20 15:54:51 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_strdup(char *str)
 	len = ft_strlen(str);
 	copy = (char *)malloc(len + 1);
 	if (!copy)
-		p_err("malloc error\n", 0);
+		return (p_err("malloc error\n", 0), NULL);
 	i = 0;
 	while (i <= len)
 	{

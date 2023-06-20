@@ -6,7 +6,7 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 19:23:21 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/19 20:43:51 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/20 16:07:29 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 # define BUFFER_SIZE 10
 # define FOV 60
-# define FOV 60	
+
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -67,7 +67,6 @@ typedef struct s_keys
 	int	r_left;
 	int	r_right;
 	int	event;
-
 }	t_keys;
 
 typedef struct s_mlx
@@ -109,9 +108,8 @@ char	*get_next_line(int fd);
 
 int		parse_map(char *file, t_map *map);
 int		texture_check(int fd, t_map *map, int *all_tx);
-int		get_color(char *line, int *n);
 int		if_map_closed(int fd, t_map *map);
-int		empty_line(char *line);
+int		empty_line(char *line, int fd);
 void	free_text(t_map map);
 
 //---------------utils------------------
@@ -124,7 +122,7 @@ char	*ft_strdup(char *str);
 int		ft_strchr(char c, char *ref);
 int		ft_atoi(char *str);
 int		ft_strchr(char c, char *ref);
-char	**ft_split(char *s, char c);
+char	**ft_split(char *s, char c, int fd);
 void	free_words(char **words);
 int		ft_open(char *file);
 //------------------------------------------------

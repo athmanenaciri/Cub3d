@@ -6,7 +6,7 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 19:39:06 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/19 21:38:34 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/20 16:07:16 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,11 @@ int	init_mlx(t_mlx	*mlxs, t_map map)
 	return (1);
 }
 
-void	lk()
-{
-	system("leaks cub3D");
-}
-
 int	main(int ac, char **av)
 {
 	t_mlx	mlxs;
 	t_map	map;
 
-	atexit(lk);
 	if (ac != 2)
 		p_err("Number of arguments\n", 1);
 	map = initialize_t_map();

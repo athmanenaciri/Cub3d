@@ -6,7 +6,7 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 19:17:30 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/19 15:52:41 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/20 16:04:37 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	free_words(char **words)
 	free(words);
 }
 
-char	*get_str(char *s, char c, char **strs)
+char	*get_str(char *s, char c, char **strs, int fd)
 {
 	char	*str;
 	int		len;
@@ -63,6 +63,7 @@ char	*get_str(char *s, char c, char **strs)
 	str = malloc(sizeof(char) * (i + 1));
 	if (str == NULL)
 	{
+		close(fd);
 		free_words(strs);
 		p_err("error split\n", 1);
 	}
@@ -77,7 +78,7 @@ char	*skip(char *s, char c)
 	return (s);
 }
 
-char	**ft_split(char *s, char c)
+char	**ft_split(char *s, char c, int fd)
 {
 	char	**strs;
 	int		count_str;
@@ -89,11 +90,12 @@ char	**ft_split(char *s, char c)
 	count_str = count(s, c);
 	strs = malloc(sizeof(char *) * (count_str + 1));
 	if (strs == NULL)
-		p_err("malloc error\n", 1);
+		return (close(fd), p_err("malloc error\n", 1), NULL);
 	i = 0;
 	while (i < count_str)
 	{
-		strs[i] = get_str(s, c, strs);
+		strs[i] = NULL;
+		strs[i] = get_str(s, c, strs, fd);
 		while (*s && *s != c)
 			s++;
 		s = skip(s, c);

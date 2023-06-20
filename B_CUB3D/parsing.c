@@ -6,7 +6,7 @@
 /*   By: okrich <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 16:05:09 by okrich            #+#    #+#             */
-/*   Updated: 2023/06/19 21:58:52 by okrich           ###   ########.fr       */
+/*   Updated: 2023/06/20 13:10:35 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*parse_texture(int fd, t_map *map)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (!empty_line(line))
+		if (!empty_line(line, fd))
 			break ;
 		map->map_skip++;
 		line = get_next_line(fd);
@@ -58,7 +58,11 @@ void	new_line_is_last(int fd)
 	while (line)
 	{
 		if (line[0] != '\n')
+		{
+			close(fd);
+			free(line);
 			p_err("Map cannot be separated by empty line\n", 1);
+		}
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -88,6 +92,7 @@ int	parse_map_content(char *line, t_map *map, int fd, int nb_player)
 		map->map_height++;
 		line = get_next_line(fd);
 	}
+	close(fd);
 	return (nb_player);
 }
 

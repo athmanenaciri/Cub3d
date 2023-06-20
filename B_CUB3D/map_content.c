@@ -6,7 +6,7 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 19:40:33 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/18 20:07:39 by anaciri          ###   ########.fr       */
+/*   Updated: 2023/06/20 16:01:10 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	if_map_closed(int fd, t_map *map)
 		free(line);
 		line = get_next_line(fd);
 	}
-	map->lines = ft_split(join, '\n');
+	map->lines = ft_split(join, '\n', fd);
 	free(join);
 	if (map_sides(map))
 		return (p_err("Map must be surrounded by wall\n", 1), 0);

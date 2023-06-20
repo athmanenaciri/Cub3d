@@ -6,7 +6,7 @@
 /*   By: anaciri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 19:40:33 by anaciri           #+#    #+#             */
-/*   Updated: 2023/06/18 19:40:35 by anaciri          ###   ########.fr       */
+/*   Updated: 2023/06/20 15:58:46 by okrich           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	map_sides(t_map *map)
 	return (0);
 }
 
-char	*change_spaces(char *line, int width)
+char	*change_spaces(char *line, int width, int fd)
 {
 	char	*new_line;
 	int		i;
@@ -45,7 +45,7 @@ char	*change_spaces(char *line, int width)
 	i = 0;
 	new_line = malloc(sizeof(char) * width + 1);
 	if (!new_line)
-		p_err("Allocation failed\n", 1);
+		return (close(fd), p_err("Allocation failed\n", 1), NULL);
 	new_line[width] = '\0';
 	while (line[i])
 	{
@@ -58,16 +58,16 @@ char	*change_spaces(char *line, int width)
 	return (new_line);
 }
 
-void	replace_spaces(t_map *map)
+void	replace_spaces(t_map *map, int fd)
 {
 	int	i;
 
 	i = -1;
 	while (map->lines[++i])
-		map->lines[i] = change_spaces(map->lines[i], map->map_width);
+		map->lines[i] = change_spaces(map->lines[i], map->map_width, fd);
 }
 
-int	check_spaces(t_map *map)
+int	check_spaces(t_map *map, int fd)
 {
 	int	i;
 	int	j;
@@ -81,13 +81,13 @@ int	check_spaces(t_map *map)
 			if (ft_strchr(map->lines[i][j], "0SNWE"))
 			{
 				if (ft_strchr(map->lines[i - 1][j], " "))
-					return (p_err("Map must be surrounded by wall\n", 1), 1);
+					return (close(fd), p_err("Map not surrounded\n", 1), 1);
 				if (ft_strchr(map->lines[i + 1][j], " "))
-					return (p_err("Map must be surrounded by wall\n", 1), 1);
+					return (close(fd), p_err("Map not surrounded\n", 1), 1);
 				if (ft_strchr(map->lines[i][j - 1], " "))
-					return (p_err("Map must be surrounded by wall\n", 1), 1);
+					return (close(fd), p_err("Map not surrounded\n", 1), 1);
 				if (ft_strchr(map->lines[i][j + 1], " "))
-					return (p_err("Map must be surrounded by wall\n", 1), 1);
+					return (close(fd), p_err("Map not surrounded\n", 1), 1);
 			}
 			j++;
 		}
@@ -114,11 +114,11 @@ int	if_map_closed(int fd, t_map *map)
 		free(line);
 		line = get_next_line(fd);
 	}
-	map->lines = ft_split(join, '\n');
+	map->lines = ft_split(join, '\n', fd);
 	free(join);
 	if (map_sides(map))
-		return (p_err("Map must be surrounded by wall\n", 1), 0);
-	replace_spaces(map);
-	check_spaces(map);
+		return (close(fd), p_err("Map must be surrounded by wall\n", 1), 0);
+	replace_spaces(map, fd);
+	check_spaces(map, fd);
 	return (0);
 }
